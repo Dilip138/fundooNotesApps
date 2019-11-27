@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { View, TextInput, Text, TouchableHighlight, Image } from 'react-native'
 import styles from '../styleSheet'
+import Snackbar from 'react-native-snackbar';
 
 export default class Login extends Component {
   constructor(props) {
@@ -10,11 +11,58 @@ export default class Login extends Component {
       password: '',
     }
   }
-  onForgot = () =>{
+  onForgot = () => {
     this.props.navigation.navigate('forgotPassword')
   }
-  onRegister = () =>{
+  onRegister = () => {
     this.props.navigation.navigate('signUp')
+  }
+  onNext = () => {
+    try {
+      if (this.state.email === '') {
+        Snackbar.show({
+          title: "Email can't be empty",
+          duration: Snackbar.LENGTH_SHORT
+        })
+      }
+      else if (!/^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/.test(this.state.email)) {
+        Snackbar.show({
+          title: "Invalid Email",
+          duration: Snackbar.LENGTH_SHORT,
+          action: {
+            title: 'UNDO',
+            color: 'red'
+          }
+        })
+      }
+      else if (this.state.password === '') {
+        Snackbar.show({
+          title: "Password can't be empty",
+          duration: Snackbar.LENGTH_SHORT
+        })
+      }
+      else if (this.state.password.length < 8) {
+        Snackbar.show({
+          title: "Password at least 8 character",
+          duration: Snackbar.LENGTH_SHORT,
+          action: {
+            title: 'UNDO',
+            color: 'red'
+          }
+        })
+      }
+      else {
+        console.log("login true");
+        let data = {
+          email: this.state.email,
+          password: this.state.password
+        }
+        this.props.navigation.navigate('forgotPassword')
+      }
+    }
+    catch (error) {
+      console.log("error in component", error)
+    }
   }
   render() {
     return (
@@ -28,6 +76,7 @@ export default class Login extends Component {
             placeholder="Email"
             keyboardType="email-address"
             underlineColorAndroid='transparent'
+            value={this.state.email}
             onChangeText={(email) => this.setState({ email })}
           />
         </View>
@@ -37,6 +86,7 @@ export default class Login extends Component {
             placeholder="Password"
             secureTextEntry={true}
             underlineColorAndroid='transparent'
+            value={this.state.password}
             onChangeText={(password) => this.setState({ password })}
           />
         </View>
