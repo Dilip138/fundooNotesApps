@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { View, TextInput, Text, TouchableHighlight, Image } from 'react-native'
+import { View, TextInput, Text, TouchableHighlight, Image, AsyncStorage } from 'react-native'
 import styles from '../styleSheet'
 import Snackbar from 'react-native-snackbar';
-
+import { userLogin } from '../controller/controller';
 export default class Login extends Component {
   constructor(props) {
     super(props);
@@ -52,12 +52,25 @@ export default class Login extends Component {
         })
       }
       else {
-        console.log("login true");
         let data = {
           email: this.state.email,
           password: this.state.password
         }
-        this.props.navigation.navigate('forgotPassword')
+        userLogin(data)
+          .then(res => {
+            console.log("res in login", res);
+            //AsyncStorage.setItem("email", this.state.email)
+            //AsyncStorage.setItem(this.state.email, res.data.id)
+            this.props.navigation.navigate('forgotPassword');
+            Snackbar.show({
+              title: 'Login SuccessFul',
+              duration: Snackbar.LENGTH_SHORT,
+              action: {
+                title: 'UNDO',
+                color: 'red',
+              },
+            });
+          })
       }
     }
     catch (error) {
@@ -68,10 +81,10 @@ export default class Login extends Component {
     return (
       <View style={styles.container}>
         <Image style={{ width: 50, height: 50 }}
-          source={require('../Assets/Person.png')} />
+          source={require('../assets/Person.png')} />
         <Text style={{ marginBottom: 25, color: 'blue', fontSize: 20 }}>Login</Text>
         <View style={styles.inputContainer}>
-          <Image style={styles.inputIcon} source={require('../Assets/gmail.jpg')} />
+          <Image style={styles.inputIcon} source={require('../assets/gmail.jpg')} />
           <TextInput style={styles.inputs}
             placeholder="Email"
             keyboardType="email-address"
@@ -81,7 +94,7 @@ export default class Login extends Component {
           />
         </View>
         <View style={styles.inputContainer}>
-          <Image style={styles.inputIcon} source={require('../Assets/lock.png')} />
+          <Image style={styles.inputIcon} source={require('../assets/lock.png')} />
           <TextInput style={styles.inputs}
             placeholder="Password"
             secureTextEntry={true}

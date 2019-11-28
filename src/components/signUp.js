@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { View, TextInput, Text, TouchableHighlight} from 'react-native'
+import { View, TextInput, Text, TouchableHighlight } from 'react-native'
 import styles from '../styleSheet'
-import Snackbar from 'react-native-snackbar'
-
+import Snackbar from 'react-native-snackbar';
+import { userSignUp } from '../controller/controller';
 export default class SignUp extends Component {
     constructor(props) {
         super(props);
@@ -98,7 +98,7 @@ export default class SignUp extends Component {
                         title: 'UNDO',
                         color: 'red',
                     },
-                });             
+                });
             } else {
                 console.log("Register true");
                 let data = {
@@ -106,13 +106,27 @@ export default class SignUp extends Component {
                     lastName: this.state.lastName,
                     email: this.state.email,
                     password: this.state.password,
-                    service: "basic"
                 };
-                this.props.navigation.navigate('login')
+                userSignUp(data)
+                    .then(res => {
+                        console.log("res in register---------", res);
+                        this.props.navigation.navigate('login');
+                        Snackbar.show({
+                            title: 'Register SuccessFul',
+                            duration: Snackbar.LENGTH_SHORT,
+                            action: {
+                                title: 'UNDO',
+                                color: 'green',
+                            },
+                        });
+                    })
+                    .catch(err => {
+                        console.log("err in register component ", err);
+                    });
             }
         }
-        catch(error){
-            console.log("error in components",error);
+        catch (error) {
+            console.log("error in components", error);
         }
     }
     render() {
@@ -123,14 +137,16 @@ export default class SignUp extends Component {
                     <TextInput style={styles.inputs}
                         placeholder="First Name"
                         underlineColorAndroid='transparent'
-                    onChangeText={(firstName) => this.setState({firstName})}
+                        value={this.state.firstName}
+                        onChangeText={(firstName) => this.setState({ firstName })}
                     />
                 </View>
                 <View style={styles.inputContainer}>
                     <TextInput style={styles.inputs}
                         placeholder="Last Name"
                         underlineColorAndroid='transparent'
-                    onChangeText={(lastName) => this.setState({lastName})}
+                        value={this.state.lastName}
+                        onChangeText={(lastName) => this.setState({ lastName })}
                     />
                 </View>
                 <View style={styles.inputContainer}>
@@ -138,7 +154,8 @@ export default class SignUp extends Component {
                         placeholder="Email"
                         keyboardType="email-address"
                         underlineColorAndroid='transparent'
-                    onChangeText={(email) => this.setState({email})}
+                        value={this.state.email}
+                        onChangeText={(email) => this.setState({ email })}
                     />
                 </View>
                 <View style={styles.inputContainer}>
@@ -146,7 +163,8 @@ export default class SignUp extends Component {
                         placeholder="Password"
                         secureTextEntry={true}
                         underlineColorAndroid='transparent'
-                    onChangeText={(password) => this.setState({password})}
+                        value={this.state.password}
+                        onChangeText={(password) => this.setState({ password })}
                     />
                 </View>
                 <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={this.onSignUp}>

@@ -23,10 +23,10 @@ const AppNavigator = createStackNavigator({
             header: null
         }
     },
-    resetPassword:{
-        screen:ResetPassword,
-        navigationOptions:{
-            header:null
+    resetPassword: {
+        screen: ResetPassword,
+        navigationOptions: {
+            header: null
         }
     }
 },
