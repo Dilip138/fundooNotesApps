@@ -1,3 +1,11 @@
+/******************************************************************************************
+* @purpose : User Interface -Mobile App design to support multiple resolution for Login component Using React-Native
+* @file : login.js
+* @module : state,props,Login,snackBar,AsyncStorage,userLogin,styles
+* @author : Dilip
+* @version : 1.0
+* @since : 29-Nov-2019
+******************************************************************************************/
 import React, { Component } from 'react'
 import { View, TextInput, Text, TouchableHighlight, Image, AsyncStorage } from 'react-native'
 import styles from '../styleSheet'
@@ -7,17 +15,21 @@ export default class Login extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      //Assing the value email and password state
       email: '',
       password: '',
     }
   }
+  //go to forgot component
   onForgot = () => {
     this.props.navigation.navigate('forgotPassword')
   }
+  //go to signup component
   onRegister = () => {
     this.props.navigation.navigate('signUp')
   }
   onNext = () => {
+    //check the validation of the email and password
     try {
       if (this.state.email === '') {
         Snackbar.show({
@@ -52,10 +64,12 @@ export default class Login extends Component {
         })
       }
       else {
+        //intialize the data in jsonObject formate 
         let data = {
           email: this.state.email,
           password: this.state.password
         }
+        //passing the data while hetting back-end api of userLogin
         userLogin(data)
           .then(res => {
             console.log("res in login", res);
@@ -67,7 +81,7 @@ export default class Login extends Component {
               duration: Snackbar.LENGTH_SHORT,
               action: {
                 title: 'UNDO',
-                color: 'red',
+                color: 'green',
               },
             });
           })

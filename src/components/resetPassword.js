@@ -1,3 +1,11 @@
+/******************************************************************************************
+* @purpose : User Interface -Mobile App design to support multiple resolution for ResetPassword component Using React-Native
+* @file : resetPassword.js
+* @module : state,props,Reset,snackBar,styles
+* @author : Dilip
+* @version : 1.0
+* @since : 29-Nov-2019
+******************************************************************************************/
 import React, { Component } from 'react';
 import { View, TextInput, Text, TouchableHighlight, Image } from 'react-native'
 import styles from '../styleSheet'
@@ -6,11 +14,13 @@ export default class ResetPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      //Assing the value password and confirmPassword state
       password: '',
       confirmPassword: '',
     }
   }
   onLogin = () => {
+    //check the validation of the password and confirmPassword
     try {
       if (this.state.password === '') {
         Snackbar.show({
@@ -75,7 +85,7 @@ export default class ResetPassword extends Component {
           />
         </View>
         <View style={styles.inputContainer}>
-          <Image style={styles.inputIcon} source={require('../assets/lock1.png')} />
+          <Image style={styles.inputIcon} source={require('../assets/lock.png')} />
           <TextInput style={styles.inputs}
             placeholder="Confirm Password"
             secureTextEntry={true}

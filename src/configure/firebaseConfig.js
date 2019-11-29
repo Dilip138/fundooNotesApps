@@ -1,5 +1,5 @@
 import firebase from 'firebase'
-
+//Firebase config object in your app
 const firebaseConfig = {
     apiKey: "AIzaSyC0YWLXl5lDBq9611_i43hgTeXoeBQLO2M",
     authDomain: "fundoonotes-25531.firebaseapp.com",
@@ -12,4 +12,5 @@ const firebaseConfig = {
 };
 // Initialize Firebase
 const Firebase=firebase.initializeApp(firebaseConfig);
-export default Firebase;
+const database= Firebase.database()
+export default {Firebase,database}

@@ -1,5 +1,13 @@
+/******************************************************************************************
+* @purpose : User Interface -Mobile App design to support multiple resolution for Forgot component Using React-Native
+* @file : forgotPassword.js
+* @module : state,props,snackBar,AsyncStorage,userForgot,styles
+* @author : Dilip
+* @version : 1.0
+* @since : 29-Nov-2019
+******************************************************************************************/
 import React, { Component } from 'react';
-import { View, TextInput, Text, TouchableHighlight, Image, AsyncStorage} from 'react-native'
+import { View, TextInput, Text, TouchableHighlight, Image, AsyncStorage } from 'react-native'
 import styles from '../styleSheet'
 import Snackbar from 'react-native-snackbar'
 import { userForgot } from '../controller/controller';
@@ -7,11 +15,13 @@ export default class ForgotPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      //Assing a value to your email state
       email: '',
     }
   }
   onReset = () => {
     try {
+      //check the validation of the email
       if (this.state.email === '') {
         Snackbar.show({
           title: "Email can't be empty",
@@ -30,9 +40,11 @@ export default class ForgotPassword extends Component {
       }
       else {
         console.log("forgot true");
+        //intialize the data in jsonObject formate 
         let data = {
           email: this.state.email
         }
+        //passing the data while hetting back-end api of userForgot
         userForgot(data)
           .then(res => {
             console.log("res in login", res);
@@ -43,7 +55,7 @@ export default class ForgotPassword extends Component {
               duration: Snackbar.LENGTH_SHORT,
               action: {
                 title: 'UNDO',
-                color: 'red',
+                color: 'green',
               },
             });
           })

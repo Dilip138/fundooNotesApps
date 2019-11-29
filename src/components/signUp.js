@@ -1,3 +1,11 @@
+/******************************************************************************************
+* @purpose : User Interface -Mobile App design to support multiple resolution for SignUp component using React-Native
+* @file : signUp.js
+* @module : state,props,Login,snackBar,userSignUp,styles
+* @author : Dilip
+* @version : 1.0
+* @since : 29-Nov-2019
+******************************************************************************************/
 import React, { Component } from 'react';
 import { View, TextInput, Text, TouchableHighlight } from 'react-native'
 import styles from '../styleSheet'
@@ -7,6 +15,7 @@ export default class SignUp extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            //Assing the value to your firstName,lastName,email,password state
             firstName: '',
             lastName: '',
             email: '',
@@ -14,6 +23,7 @@ export default class SignUp extends Component {
         }
     }
     onSignUp = () => {
+        //check the validation of the firstName,lastName,email and password
         try {
             if (this.state.firstName === "") {
                 Snackbar.show({
@@ -101,12 +111,14 @@ export default class SignUp extends Component {
                 });
             } else {
                 console.log("Register true");
+                //intialize the data in jsonObject formate
                 let data = {
                     firstName: this.state.firstName,
                     lastName: this.state.lastName,
                     email: this.state.email,
                     password: this.state.password,
                 };
+                //passing the data while hetting back-end api of userSignUp
                 userSignUp(data)
                     .then(res => {
                         console.log("res in register---------", res);
