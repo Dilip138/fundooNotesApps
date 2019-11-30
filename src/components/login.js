@@ -20,11 +20,11 @@ export default class Login extends Component {
       password: '',
     }
   }
-  //go to forgot component
+  //navigate to forgot component
   onForgot = () => {
     this.props.navigation.navigate('forgotPassword')
   }
-  //go to signup component
+  //navigate to signup component
   onRegister = () => {
     this.props.navigation.navigate('signUp')
   }

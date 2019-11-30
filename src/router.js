@@ -1,5 +1,5 @@
 /******************************************************************************************
-* @purpose : User Interface -Mobile App design to support multiple resolution for Calling the API Using React-Native
+* @purpose : User Interface -Mobile App design to support multiple resolution for Calling the components Using React-Native
 * @file : router.js
 * @module : AppNavigator,createStackNavigator,login,signUp,forgotPassword,resetPassword
 * @author : Dilip

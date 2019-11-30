@@ -121,7 +121,7 @@ export default class SignUp extends Component {
                 //passing the data while hetting back-end api of userSignUp
                 userSignUp(data)
                     .then(res => {
-                        console.log("res in register---------", res);
+                        console.warn("res in register---------", res);
                         this.props.navigation.navigate('login');
                         Snackbar.show({
                             title: 'Register SuccessFul',
