@@ -26,12 +26,12 @@ export async function userSignUp(user) {
         let addData = await db.collection('user').doc(currentUser).set(data);
         //console.warn("user in services ", addData);
             //check the Email verification
-            const emitter = new EventEmitter();
+            //const emitter = new EventEmitter();
             function emailVerification() {
                 firebaseData.auth().currentUser.sendEmailVerification()
             }
-            emitter.on('email verification', emailVerification);
-            emitter.emit('email verification');
+            EventEmitter.on('email verification', emailVerification);
+            EventEmitter.emit('email verification');
             return res
     } catch (error) {
         console.log(error.toString(error));

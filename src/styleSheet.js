@@ -46,5 +46,49 @@ export default StyleSheet.create({
   },
   Text: {
     fontSize: 18
-  }
+  },
+  header: {
+    flex:1,
+  },
+  icon: {
+    width: 20,
+    height: 20,
+    justifyContent: 'center'
+  },
+  imageIcon: {
+    width: 24,
+    height: 24,
+    justifyContent: 'center'
+  },
+  navBar:{
+    flexDirection:'row',
+    justifyContent:'space-between'
+  },
+  footer: {
+  marginTop:530,
+    backgroundColor: "#fff",
+    elevation: 5,
+    height: 50,
+    flexDirection: 'row',
+},
+
+addNote: {
+    justifyContent: "center"
+},
+
+addNoteText: {
+    fontSize: 15,
+    paddingLeft: 20,
+    color: "#757575"
+},
+
+footerOption: {
+    paddingHorizontal: 15,
+    justifyContent: "center",
+},
+
+footerOptionFont: {
+    fontSize: 25,
+    color: "#212121"
+},
 });

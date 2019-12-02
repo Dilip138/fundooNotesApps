@@ -6,11 +6,12 @@
 * @version : 1.0
 * @since : 29-Nov-2019
 ******************************************************************************************/
-import { createStackNavigator } from 'react-navigation-stack'
+import { createStackNavigator, Header } from 'react-navigation-stack'
 import Login from './components/login';
 import SignUp from './components/signUp'
 import ForgotPassword from './components/forgotPassword';
 import ResetPassword from './components/resetPassword';
+import DashBoard from './components/dashBoard';
 
 const AppNavigator = createStackNavigator({
     //calling the login component
@@ -40,9 +41,15 @@ const AppNavigator = createStackNavigator({
         navigationOptions: {
             header: null
         }
-    }
+    },
+    dashBoard: {
+        screen: DashBoard,
+        navigationOptions: {
+            header: null
+        }
+    },
 },
     {
-        initialRouteName: "login",
+        initialRouteName: "dashBoard",
     });
 export default AppNavigator;
