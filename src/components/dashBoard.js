@@ -1,22 +1,23 @@
 import React, { Component } from 'react';
-import { Text, View, ActivityIndicator, Image, TouchableOpacity,TouchableHighlight } from 'react-native'
-import {Card, Avatar } from 'react-native-elements'
+import { Text, View, ActivityIndicator, Image, TouchableOpacity, TouchableHighlight } from 'react-native'
+import { Card, Avatar } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import styles from '../styleSheet';
 
 export default class DashBoard extends Component {
     render() {
         return (
-            //     <View style={styles.progressBar}>
+            //     <View>
             //         <ActivityIndicator size="large" color="green" />
 
 
+            //<View style ={styles.headerfooter}>
             <View style={styles.header}>
-                <Card containerStyle={{ borderRadius: 15, height: 55 }}>
+                <Card containerStyle={{ borderRadius: 10, height: 55 }}>
                     <View style={styles.navBar}>
                         <TouchableOpacity
                             onPress={() => { this.props.navigation.dispatch(DrawerActions.openDrawer()) }}>
-                            <Image style={styles.imageIcon} source={require('../assets/menu.png')} />
+                            <Icon name="menu" size={26} />
                         </TouchableOpacity>
                         <TouchableOpacity onPress={() => this.props.navigation.navigate("search")}>
                             <Text>Search your notes </Text>
@@ -29,7 +30,7 @@ export default class DashBoard extends Component {
                         </View>
                         {/* <View>
                                 <TouchableOpacity onPress={(event) => this.gridView(event)}>
-                                    <Image style={styles.IconArrow}
+                                    <Image style={styles.icon}
                                         source={require('../assets/list.png')}
                                     />
                                 </TouchableOpacity>
@@ -37,16 +38,31 @@ export default class DashBoard extends Component {
                         <Avatar rounded title="MD" />
                     </View>
                 </Card>
+                {/* </View> */}
                 <View style={styles.footer}>
-                <TouchableHighlight
-                    style={styles.addNote}
-                    //onPress={() => this.props.navigation.navigate('Edit', [this.props.uid, {}])}
-                    underlayColor="#EEEEEE">
-                    <Text style={styles.addNoteText}>Take a note...</Text>
-                </TouchableHighlight>
+                    <TouchableHighlight style={styles.imageIcon}>
+                        {/* onPress={() => { this.props.navigation.dispatch(DrawerActions.openDrawer()) }} */}
+                        <Image source={require('../assets/checkbox.png')}
+                            style={styles.image} />
+                    </TouchableHighlight>
+                    <TouchableHighlight style={styles.imageIcon}>
+                        {/* onPress={() => this.props.navigation.navigate('Edit', [this.props.uid, {}])} */}
+                        <Image source={require('../assets/brush.png')}
+                            style={styles.image} />
+                    </TouchableHighlight>
+                    <TouchableHighlight style={styles.imageIcon}>
+                        {/* onPress={() => this.props.navigation.navigate('Edit', [this.props.uid, {}])} */}
+                        <Image source={require('../assets/photo.png')}
+                            style={styles.image} />
+                    </TouchableHighlight>
+                        <TouchableHighlight style={styles.imageIcon}>
+                            {/* onPress={() => this.props.navigation.navigate('Edit', [this.props.uid, {}])} */}
+                            <Image source={require('../assets/plus.jpg')}
+                                style={styles.image1} />
+                        </TouchableHighlight>
+                </View>
             </View>
-            </View>
-            // </View>
+
         );
     }
 }

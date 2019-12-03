@@ -48,47 +48,34 @@ export default StyleSheet.create({
     fontSize: 18
   },
   header: {
-    flex:1,
+    flex: 1,
+    justifyContent:'space-between',
+     flexDirection:'column'
   },
   icon: {
     width: 20,
     height: 20,
-    justifyContent: 'center'
   },
-  imageIcon: {
-    width: 24,
-    height: 24,
-    justifyContent: 'center'
-  },
-  navBar:{
-    flexDirection:'row',
-    justifyContent:'space-between'
+  navBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-between'
   },
   footer: {
-  marginTop:530,
     backgroundColor: "#fff",
+    flexDirection:'row',
     elevation: 5,
-    height: 50,
-    flexDirection: 'row',
-},
-
-addNote: {
-    justifyContent: "center"
-},
-
-addNoteText: {
-    fontSize: 15,
-    paddingLeft: 20,
-    color: "#757575"
-},
-
-footerOption: {
-    paddingHorizontal: 15,
+    height:50
+  },
+  imageIcon: {
+    margin:15,
     justifyContent: "center",
-},
-
-footerOptionFont: {
-    fontSize: 25,
-    color: "#212121"
-},
+  },
+  image: {
+    width: 24,
+    height: 24,
+  },
+  image1: {
+    width: 40,
+    height: 40,
+  },
 });
