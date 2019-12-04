@@ -56,6 +56,10 @@ export default StyleSheet.create({
     width: 20,
     height: 20,
   },
+  icon1: {
+    width: 30,
+    height: 30,
+  },
   navBar: {
     flexDirection: 'row',
     justifyContent: 'space-between'
@@ -77,5 +81,15 @@ export default StyleSheet.create({
   image1: {
     width: 40,
     height: 40,
+  },
+  containerSideMenu: {
+    paddingTop: 20,
+    flex: 1
+  },
+  navItemStyle: {
+    padding: 10
+  },
+  navSectionStyle: {
+    backgroundColor: 'lightgrey'
   },
 });

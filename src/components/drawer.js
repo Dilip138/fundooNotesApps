@@ -1,35 +1,27 @@
-import React, { Component } from 'react';
-import { createAppContainer, createDrawerNavigator, DrawerActions } from "react-navigation";
-import Dashboard from '../components/dashBoard';
+import { createAppContainer } from "react-navigation";
+import { createDrawerNavigator } from 'react-navigation-drawer'
+import SideMenu from '../components/sideMenu';
+import Trash from '../components/trash';
+import Archieve from "./archieve";
+//import DashBoard from "../components/dashBoard";
+import Remainder from "./remainder";
 
 const drawer = createDrawerNavigator({
-    notes: {
-        screen:Dashboard,
-        navigationOpation: {
-            header: null
-        }
-    },
-    reminder: {
-        screen: ReminderNotes,
-        navigationOpation: {
-            header: null
-
-        }
-    },
-   
-    archive: {
-        screen: ArchiveNotes,
-        navigationOpation: {
-            header: null
-        }
-
-    },
     trash: {
-        screen: TrashNotes,
-        navigationOpation: {
-            header: null
-        }
+        screen: Trash
+    },
+    archieve: {
+        screen: Archieve
+    },
+    remainder: {
+        screen: Remainder
     }
+},
+    {
+        contentComponent: SideMenu,
+        drawerWidth: 300
+    }
+)
+export default AppContainer = createAppContainer(drawer);
 
-})
-export default drawerContainer = createAppContainer(drawer);
+

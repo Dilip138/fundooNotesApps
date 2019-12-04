@@ -75,7 +75,7 @@ export default class Login extends Component {
             console.log("res in login", res);
             //AsyncStorage.setItem("email", this.state.email)
             //AsyncStorage.setItem(this.state.email, res.data.id)
-            this.props.navigation.navigate('forgotPassword');
+            this.props.navigation.navigate('dashBoard');
             Snackbar.show({
               title: 'Login SuccessFul',
               duration: Snackbar.LENGTH_SHORT,

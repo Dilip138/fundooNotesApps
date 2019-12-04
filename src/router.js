@@ -12,16 +12,18 @@ import SignUp from './components/signUp'
 import ForgotPassword from './components/forgotPassword';
 import ResetPassword from './components/resetPassword';
 import DashBoard from './components/dashBoard';
-import Drawer from './components/drawer';
+import AppContainer from './components/drawer';
 
 const AppNavigator = createStackNavigator({
     //calling the login component
+ 
     login: {
         screen: Login,
         navigationOptions: {
             header: null
         }
     },
+   
     //calling the signUp component
     signUp: {
         screen: SignUp,
@@ -44,20 +46,22 @@ const AppNavigator = createStackNavigator({
         }
     },
     //calling the DashBoard component 
+    drawerScreen: {
+        screen: AppContainer,
+        navigationOptions:{
+            header:null
+        }
+       
+    },
     dashBoard: {
         screen: DashBoard,
         navigationOptions: {
             header: null
         }
     },
-    drawer: {
-        screen: Drawer,
-        navigationOptions: {
-            header: null
-        }
-    },
+   
 },
     {
-        initialRouteName: "drawer",
+        initialRouteName: "dashBoard",
     });
 export default AppNavigator;
