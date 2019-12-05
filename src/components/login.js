@@ -72,10 +72,10 @@ export default class Login extends Component {
         //passing the data while hetting back-end api of userLogin
         userLogin(data)
           .then(res => {
-            console.log("res in login", res);
+            console.warn("res in login", res);
             //AsyncStorage.setItem("email", this.state.email)
             //AsyncStorage.setItem(this.state.email, res.data.id)
-            this.props.navigation.navigate('dashBoard');
+            this.props.navigation.navigate('drawerScreen');
             Snackbar.show({
               title: 'Login SuccessFul',
               duration: Snackbar.LENGTH_SHORT,

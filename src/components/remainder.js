@@ -1,13 +1,23 @@
 import React, { Component } from 'react';
-import {View,Text} from 'react-native'
+import {View,Text,Image} from 'react-native';
+import styles from '../styleSheet'
 export default class Remainder extends Component {
+  static navigationOptions = {
+    drawerLabel: 'Remainders',
+    drawerIcon: () => (
+        <Image
+            source={require('../assets/notifications.png')}
+             style={styles.Icon}
+        />
+    ),
+};
   render() {
     return (
-        <View style={{padding: 50}}>
-        <Text>
-          Page1
-        </Text>
-      </View>
+      <View style={{padding:10}} >
+      <Text>
+        Remainder
+      </Text>
+    </View>
     );
   }
 }

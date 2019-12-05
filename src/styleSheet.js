@@ -49,8 +49,8 @@ export default StyleSheet.create({
   },
   header: {
     flex: 1,
-    justifyContent:'space-between',
-     flexDirection:'column'
+    justifyContent: 'space-between',
+    flexDirection: 'column'
   },
   icon: {
     width: 20,
@@ -66,12 +66,12 @@ export default StyleSheet.create({
   },
   footer: {
     backgroundColor: "#fff",
-    flexDirection:'row',
+    flexDirection: 'row',
     elevation: 5,
-    height:50
+    height: 50
   },
   imageIcon: {
-    margin:15,
+    margin: 15,
     justifyContent: "center",
   },
   image: {
@@ -82,14 +82,71 @@ export default StyleSheet.create({
     width: 40,
     height: 40,
   },
-  containerSideMenu: {
-    paddingTop: 20,
+  Icon:
+  {
+    height: 30,
+    width: 30,
+    marginLeft: 5,
+  },
+  container1: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center"
+  },
+  container2: {
+    justifyContent: "center",
+    alignItems: "center",
+    height: 200,
+    width: 300,
+    backgroundColor: '#c7d3cd',
+  },
+  container3: {
+    justifyContent: "center",
+    alignItems: "center",
+    flexDirection: 'row',
+  },
+  image2: {
+    width: 24,
+    height: 24,
+    justifyContent: 'flex-start',
+    alignItems: 'flex-start',
+    marginHorizontal: 10,
+  },
+  text: {
+    fontSize: 16
+  },
+  text1: {
+    fontSize: 18,
+    marginVertical: 30
+  },
+  containerButton: {
+    flexDirection: 'row',
+    marginHorizontal: 20
+  },
+data: {
+    height: 70,
+    width: 340,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginVertical: 10,
+    alignItems: 'center',
+    padding: 20,
+    borderRadius: 15,
+},
+data1: {
+
+    justifyContent: 'center',
+    alignItems: 'center',
+},
+first: {
     flex: 1
-  },
-  navItemStyle: {
-    padding: 10
-  },
-  navSectionStyle: {
-    backgroundColor: 'lightgrey'
-  },
+},
+distance: {
+    paddingRight: 70
+}, 
+last: {
+  marginBottom: 8,
+    flexDirection: 'row',
+    justifyContent:'space-between'
+},
 });

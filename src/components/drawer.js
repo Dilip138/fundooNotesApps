@@ -1,27 +1,42 @@
 import { createAppContainer } from "react-navigation";
-import { createDrawerNavigator } from 'react-navigation-drawer'
-import SideMenu from '../components/sideMenu';
 import Trash from '../components/trash';
-import Archieve from "./archieve";
-//import DashBoard from "../components/dashBoard";
-import Remainder from "./remainder";
+import Archive from './archive';
+import DashBoard from "../components/dashBoard";
+import Remainder from '../components/remainder'
+import { createDrawerNavigator } from "react-navigation-drawer";
+import SignOut from "./signOut";
 
 const drawer = createDrawerNavigator({
+    notes: {
+        screen: DashBoard,
+        navigationOptions: {
+            header: null
+        }
+    },
+    remainder: {
+        screen: Remainder,
+    },
+    archive: {
+        screen: Archive
+    },
     trash: {
         screen: Trash
     },
-    archieve: {
-        screen: Archieve
-    },
-    remainder: {
-        screen: Remainder
+    signOut:{
+        screen:SignOut
     }
 },
     {
-        contentComponent: SideMenu,
-        drawerWidth: 300
+        drawerPosition: 'left',
+        drawerWidth: 280,
+        contentOptions: {
+            activeTintColor: '#ffffff',
+            inactiveTintColor: '#1999CE',
+
+            activeBackgroundColor: '#1999CE',
+            inactiveBackgroundColor: '#ffffff',
+        }
     }
-)
-export default AppContainer = createAppContainer(drawer);
 
-
+);
+export default AppContainer = createAppContainer(drawer)

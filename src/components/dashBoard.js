@@ -4,49 +4,36 @@ import { Card, Avatar } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import styles from '../styleSheet';
 import { DrawerActions } from 'react-navigation-drawer'
-import {withNavigation} from 'react-navigation'
-import Trash from './trash';
-import drawer from './drawer'
+import { withNavigation } from 'react-navigation'
 
- class DashBoard extends Component {
-    constructor() {
-        super()
+class DashBoard extends Component {
+    constructor(props) {
+        super(props)
         this.state = {
             open: false,
             notes: [],
         }
     }
-    handleDrawerOpen=()=>{
+    static navigationOptions = {
+        drawerLabel: 'Notes',
+        drawerIcon: () => (
+            <Image
+                source={require('../assets/notes.png')}
+                style={styles.Icon}
+            />
+        ),
+    };
+    handleDrawerOpen = () => {
         this.setState({
-            open : true
+            open: true
         })
     }
     gridList() {
         this.setState({
             open: !this.state.open
         })
-        this.props.navigation.dispatch(DrawerActions.openDrawer())
-
     }
-    menu() {
-        console.warn("in drawer");
-        this.props.navigation.dispatch(DrawerActions.openDrawer())
-
-    }
-    static navigationOptions = {
-        drawerLabel: 'Notes',
-        drawerIcon: ({ tintColor }) => (
-            <Image
-                source={require('../assets/brush.png')}
-                style={[styles.Icon, { tintColor: tintColor }]}
-            />
-        ),
-    };
-
     render() {
-        console.warn("props", this.props.navigation.dispatch(DrawerActions.toggleDrawer())
-
-        );
         return (
             //     <View>
             //         <ActivityIndicator size="large" color="green" />
@@ -54,14 +41,18 @@ import drawer from './drawer'
             <View style={styles.header}>
                 <Card containerStyle={{ borderRadius: 10, height: 55 }}>
                     <View style={styles.navBar}>
-                        <TouchableOpacity
-                            onPress={() => 
-                                this.props.navigation.dispatch(DrawerActions.toggleDrawer())}>
-                            <Icon name="menu" size={26} />
-                        </TouchableOpacity>
-                        <TouchableOpacity onPress={() => this.props.navigation.navigate('search')}>
-                            <Text>Search your notes </Text>
-                        </TouchableOpacity>
+                        <View>
+                            <TouchableOpacity
+                                onPress={() =>
+                                    this.props.navigation.dispatch(DrawerActions.openDrawer())}>
+                                <Icon name="menu" size={26} />
+                            </TouchableOpacity>
+                        </View>
+                        <View>
+                            <TouchableOpacity onPress={() => this.props.navigation.navigate('search')}>
+                                <Text>Search your notes </Text>
+                            </TouchableOpacity>
+                        </View>
                         {!this.state.open ?
                             (<View>
                                 <TouchableOpacity onPress={() => this.gridList()}>
@@ -72,13 +63,19 @@ import drawer from './drawer'
                             ) : (
                                 <View>
                                     <TouchableOpacity onPress={() => this.gridList()}>
-                                        <Image style={styles.icon1}
-                                            source={require('../assets/list.png')}
+                                        <Image style={styles.icon}
+                                            source={require('../assets/list1.png')}
                                         />
                                     </TouchableOpacity>
                                 </View>
                             )}
-                        <Avatar rounded title="MD" />
+                        <View>
+                            <TouchableOpacity onPress={() => this.profile()}>
+                                <Image style={styles.icon1}
+                                    source={require('../assets/profile.png')}
+                                />
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </Card>
                 <View style={styles.footer}>
@@ -98,7 +95,7 @@ import drawer from './drawer'
                             style={styles.image} />
                     </TouchableHighlight>
                     <TouchableHighlight style={styles.imageIcon}
-                        onPress={this.notes}>
+                        onPress={() => { this.props.navigation.navigate('takeNotes')}}>
                         <Image source={require('../assets/plus.jpg')}
                             style={styles.image1} />
                     </TouchableHighlight>
