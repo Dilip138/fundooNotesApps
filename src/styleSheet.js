@@ -123,30 +123,21 @@ export default StyleSheet.create({
     flexDirection: 'row',
     marginHorizontal: 20
   },
-data: {
-    height: 70,
-    width: 340,
+  data1: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginVertical: 10,
-    alignItems: 'center',
-    padding: 20,
-    borderRadius: 15,
-},
-data1: {
-
-    justifyContent: 'center',
-    alignItems: 'center',
-},
-first: {
+    justifyContent:'space-between',
+    marginVertical: 5,
+    paddingTop: 20,
+  },
+  data2:{
+    flexDirection:'row',
+  },
+  first: {
     flex: 1
-},
-distance: {
-    paddingRight: 70
-}, 
-last: {
-  marginBottom: 8,
+  },
+  last: {
+    marginBottom: 8,
     flexDirection: 'row',
-    justifyContent:'space-between'
-},
+    justifyContent: 'space-between'
+  },
 });

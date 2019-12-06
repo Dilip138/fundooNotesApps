@@ -70,7 +70,7 @@ class DashBoard extends Component {
                                 </View>
                             )}
                         <View>
-                            <TouchableOpacity onPress={() => this.profile()}>
+                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('signOut')}}>
                                 <Image style={styles.icon1}
                                     source={require('../assets/profile.png')}
                                 />

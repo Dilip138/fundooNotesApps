@@ -23,6 +23,7 @@ const AppNavigator = createStackNavigator({
             header: null
         }
     },
+    //calling the drawer component
     drawerScreen: {
         screen: AppContainer,
         navigationOptions: {
@@ -58,6 +59,7 @@ const AppNavigator = createStackNavigator({
             header: null
         }
     },
+    //calling the takeNotes component
     takeNotes: {
         screen: TakeNote,
         navigationOptions: {

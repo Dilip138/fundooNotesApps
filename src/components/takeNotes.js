@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
-import {View,TouchableOpacity,Image,Text,TextInput} from 'react-native'
+import { View, TouchableOpacity, Image, Text, TextInput } from 'react-native'
 import styles from '../styleSheet'
 
 export default class TakeNote extends Component {
-    constructor(props){
+    constructor(props) {
         super(props)
-            this.state={
-                Notes:'',
-                Title:'',
-                pin:''
-            
+        this.state = {
+            Notes: '',
+            Title: '',
+            pin: ''
+
         }
     }
     getpin() {
@@ -21,30 +21,26 @@ export default class TakeNote extends Component {
         return (
             <View style={{ flex: 1 }}>
                 <View style={styles.data1}>
-                    <View style={styles.data}>
-                        <View style={styles.distance}>
-
-                            <TouchableOpacity onPress={() => { this.submit() }}>
-                                <Image style={styles.image2} source={require('../assets/arrow.png')} />
-                            </TouchableOpacity>
-                        </View>
-                        <TouchableOpacity  >
-                            <Text >               </Text>
+                    <View>
+                        <TouchableOpacity onPress={() => { this.submit() }}>
+                            <Image style={styles.image2} source={require('../assets/arrow.png')} />
                         </TouchableOpacity>
-                        {
-                            !this.state.pin ?
-                                (<View>
-                                    <TouchableOpacity onPress={(event) => this.getpin(event)}>
-                                        <Image style={styles.image2} source={require('../assets/brush.png')}></Image>
-                                    </TouchableOpacity>
-                                </View>)
-
-                                : (<View>
-                                    <TouchableOpacity onPress={(event) => this.getpin(event)}>
-                                        <Image style={styles.image2} source={require('../assets/delete.png')}></Image>
-                                    </TouchableOpacity>
-                                </View>)
-                        }
+                    </View>
+                    <View style={styles.data2}>
+                        {!this.state.pin ?
+                            (
+                                <TouchableOpacity onPress={(event) => this.getpin(event)}>
+                                    <Image style={styles.image2} source={require('../assets/pin1.png')}></Image>
+                                </TouchableOpacity>
+                            )
+                            : (
+                                <TouchableOpacity onPress={(event) => this.getpin(event)}>
+                                    <Image style={styles.image2} source={require('../assets/unpin.png')}></Image>
+                                </TouchableOpacity>
+                            )}
+                        <TouchableOpacity onPress={(event) => this.getArchive(event)}>
+                            <Image style={styles.image2} source={require('../assets/alert.png')}></Image>
+                        </TouchableOpacity>
                         <TouchableOpacity onPress={(event) => this.getArchive(event)}>
                             <Image style={styles.image2} source={require('../assets/archive.png')}></Image>
                         </TouchableOpacity>
@@ -68,8 +64,6 @@ export default class TakeNote extends Component {
                         ref={(input) => this.Notes = input}
                     />
                     <Text>{this.state.reminder}</Text>
-
-
                 </View>
                 {/* <Menu
             view={this.state.click}
@@ -77,21 +71,15 @@ export default class TakeNote extends Component {
             trash={this.handleTrash}
             navigation={this.props.navigation} /> */}
                 <View style={{ flex: 1 }}></View>
-
                 <View style={styles.last}>
-
-                    <View>
-                        <TouchableOpacity>
-                            <Image style={styles.image2} source={require('../assets/plus1.png')}></Image>
-                        </TouchableOpacity>
-                    </View>
+                    <TouchableOpacity>
+                        <Image style={styles.image2} source={require('../assets/plus1.png')}></Image>
+                    </TouchableOpacity>
                     <TouchableOpacity onPress={() => { this.getmenu() }}>
                         <Image style={styles.image2} source={require('../assets/menu1.png')}></Image>
 
                     </TouchableOpacity>
-                   
                 </View>
-
             </View>
         );
     }
