@@ -8,6 +8,7 @@
 ******************************************************************************************/
 import firebaseData from "../configure/firebaseConfig";
 import EventEmitter from 'react-native-eventemitter'
+import { AsyncStorage } from "react-native";
 let db = firebaseData.firestore();
 //create emailId and password for authentication
 export async function userSignUp(user) {
@@ -18,12 +19,10 @@ export async function userSignUp(user) {
             email: user.email,
             password: user.password
         }
-        //console.warn("data in  services ", data);
         let res = await firebaseData.auth().createUserWithEmailAndPassword(user.email, user.password);
         let currentUser = await firebaseData.auth().currentUser.email;
-        //console.warn("current user ", currentUser);
         let addData = await db.collection('user').doc(currentUser).set(data);
-        //console.warn("user in services ", addData);
+        console.warn("user in services ", res);
         //check the Email verification
         //const emitter = new EventEmitter();
         function emailVerification() {
@@ -31,7 +30,7 @@ export async function userSignUp(user) {
         }
         EventEmitter.on('email verification', emailVerification);
         EventEmitter.emit('email verification');
-        return res
+        return 'success'
     } catch (error) {
         console.log(error.toString(error));
     }
@@ -55,10 +54,39 @@ export async function userForgot(user) {
         console.log(error.toString())
     }
 }
+export async function createNotes(noteData) {
+    console.warn("res in notedata", noteData)
+    try {
+        let data = {
+            title: noteData.title,
+            notes: noteData.notes,
+        }
+        console.warn("res in data", data);
+        let currentId = await firebaseData.auth().currentUser.uid;
+        console.warn("res in currentuser", currentId);
+        let res = await db.collection('notes').doc(currentId).set(data)
+        console.warn("res in notes", res)
+    }
+    catch (error) {
+        console.log(error.toString());
+    }
+}
+export async function getNotes() {
+    let query = db.collection('notes').orderByKey();
+    query.once("value")
+        .then(function (snapshot) {
+            snapshot.forEach(function (childSnapshot) {
+                var key = childSnapshot.key;
+                // childData will be the actual contents of the child
+                var childData = childSnapshot.val();
+            });
+        });
+}
 //check logOut for user authentication
 export async function userSignOut() {
     try {
-        await firebaseData.auth().signOut();
+        let res = await firebaseData.auth().signOut();
+        console.log("res in signOut", res);
     }
     catch (error) {
         console.log(error.toString())

@@ -13,7 +13,8 @@ import ForgotPassword from './components/forgotPassword';
 import ResetPassword from './components/resetPassword';
 import DashBoard from './components/dashBoard';
 import AppContainer from './components/drawer';
-import TakeNote from './components/takeNotes'
+import TakeNote from './components/takeNotes';
+import SignOut from './components/signOut';
 
 const AppNavigator = createStackNavigator({
     //calling the login component
@@ -65,7 +66,14 @@ const AppNavigator = createStackNavigator({
         navigationOptions: {
             header: null
         }
-    }
+    },
+      //calling the signOut component
+    signOut: {
+        screen: SignOut,
+        navigationOptions: {
+            header: null
+        }
+    },
 },
     {
         initialRouteName: "drawerScreen",

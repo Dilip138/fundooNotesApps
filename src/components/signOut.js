@@ -10,7 +10,7 @@ export default class SignOut extends Component {
     handle() {
         userSignOut()
             .then((res) => {
-                console.log("res in login", res);
+                console.log("res in signOut", res);
                 this.props.navigation.navigate('login')
             })
     }

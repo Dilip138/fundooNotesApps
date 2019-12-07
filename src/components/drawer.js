@@ -4,14 +4,10 @@ import Archive from './archive';
 import DashBoard from "../components/dashBoard";
 import Remainder from '../components/remainder'
 import { createDrawerNavigator } from "react-navigation-drawer";
-import SignOut from "./signOut";
 
 const drawer = createDrawerNavigator({
     notes: {
         screen: DashBoard,
-        navigationOptions: {
-            header: null
-        }
     },
     remainder: {
         screen: Remainder,
@@ -22,9 +18,6 @@ const drawer = createDrawerNavigator({
     trash: {
         screen: Trash
     },
-    signOut:{
-        screen:SignOut
-    }
 },
     {
         drawerPosition: 'left',

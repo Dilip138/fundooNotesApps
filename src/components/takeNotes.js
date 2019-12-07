@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Image, Text, TextInput } from 'react-native'
-import styles from '../styleSheet'
+import styles from '../styleSheet';
+import Snackbar from 'react-native-snackbar';
+import { createNotes } from '../controller/controller';
 
 export default class TakeNote extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            Notes: '',
-            Title: '',
+            notes: [],
+            title: '',
             pin: ''
-
         }
     }
     getpin() {
@@ -17,12 +18,50 @@ export default class TakeNote extends Component {
             pin: !this.state.pin
         })
     }
+    onSubmit = () => {
+        try {
+            if (this.state.notes === '') {
+                Snackbar.show({
+                    title: 'Enter the notes'
+                })
+            }
+            else if (this.state.title === '') {
+                Snackbar.show({
+                    title: 'Enter the Title'
+                })
+            }
+            else {
+                let data = {
+                    title: this.state.title,
+                    notes: this.state.notes,
+                }
+                console.warn("res in data", data);
+
+                createNotes(data)
+                    .then((res) => {
+                        console.log("res in Notes", res);
+                        this.props.navigation.navigate('drawerScreen')
+                        Snackbar.show({
+                            title: 'Notes is SuccessFull',
+                            duration: Snackbar.LENGTH_SHORT,
+                            action: {
+                                title: 'UNDO',
+                                color: 'green',
+                            },
+                        });
+                    })
+            }
+        } catch (error) {
+            console.log(error.toString());
+
+        }
+    }
     render() {
         return (
             <View style={{ flex: 1 }}>
                 <View style={styles.data1}>
                     <View>
-                        <TouchableOpacity onPress={() => { this.submit() }}>
+                        <TouchableOpacity onPress={() => { this.onSubmit() }}>
                             <Image style={styles.image2} source={require('../assets/arrow.png')} />
                         </TouchableOpacity>
                     </View>
@@ -51,17 +90,17 @@ export default class TakeNote extends Component {
                         style={{ fontSize: 25 }}
                         placeholder="Title"
                         placeholderTextColor="#a1a5a3"
-                        onChangeText={(Title) => this.setState({ Title })}
+                        onChangeText={(title) => this.setState({ title })}
                         value={this.state.Title}
-                        onSubmitEditing={() => this.Notes.focus()}
+                        onSubmitEditing={() => this.notes.focus()}
                     />
                     <TextInput placeholder="Note"
                         style={{ fontSize: 15 }}
                         placeholderTextColor="#a1a5a3"
-                        onChangeText={(Notes) => this.setState({ Notes })}
-                        value={this.state.Notes}
+                        onChangeText={(notes) => this.setState({ notes })}
+                        value={this.state.notes}
                         multiline={this.state.newline}
-                        ref={(input) => this.Notes = input}
+                        ref={(input) => this.notes = input}
                     />
                     <Text>{this.state.reminder}</Text>
                 </View>
