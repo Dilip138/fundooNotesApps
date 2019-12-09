@@ -8,7 +8,7 @@ export default class TakeNote extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            notes: [],
+            description: [],
             title: '',
             pin: ''
         }
@@ -33,7 +33,7 @@ export default class TakeNote extends Component {
             else {
                 let data = {
                     title: this.state.title,
-                    notes: this.state.notes,
+                    description: this.state.description,
                 }
                 console.warn("res in data", data);
 
@@ -92,15 +92,12 @@ export default class TakeNote extends Component {
                         placeholderTextColor="#a1a5a3"
                         onChangeText={(title) => this.setState({ title })}
                         value={this.state.Title}
-                        onSubmitEditing={() => this.notes.focus()}
                     />
-                    <TextInput placeholder="Note"
+                    <TextInput placeholder="Description"
                         style={{ fontSize: 15 }}
                         placeholderTextColor="#a1a5a3"
-                        onChangeText={(notes) => this.setState({ notes })}
+                        onChangeText={(description) => this.setState({ description })}
                         value={this.state.notes}
-                        multiline={this.state.newline}
-                        ref={(input) => this.notes = input}
                     />
                     <Text>{this.state.reminder}</Text>
                 </View>

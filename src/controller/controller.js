@@ -59,7 +59,7 @@ export async function createNotes(noteData) {
     try {
         let data = {
             title: noteData.title,
-            notes: noteData.notes,
+            description: noteData.description,
         }
         console.warn("res in data", data);
         let currentId = await firebaseData.auth().currentUser.uid;
@@ -72,15 +72,16 @@ export async function createNotes(noteData) {
     }
 }
 export async function getNotes() {
-    let query = db.collection('notes').orderByKey();
-    query.once("value")
-        .then(function (snapshot) {
-            snapshot.forEach(function (childSnapshot) {
-                var key = childSnapshot.key;
-                // childData will be the actual contents of the child
-                var childData = childSnapshot.val();
-            });
-        });
+    let note;
+   await db.collection('notes').get().then((value) => {
+        value.forEach((noteData) => {
+            console.warn("notedata in controller", noteData.data())
+            note =noteData.data()
+            console.warn("res in note",note)
+        })
+    })  
+    console.warn("res in note1",note)
+    return note
 }
 //check logOut for user authentication
 export async function userSignOut() {

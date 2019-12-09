@@ -1,39 +1,25 @@
 import React, { Component } from 'react';
-import { View } from 'react-native';
-import { DisplayCards } from 'react-native-elements';
-import { getNotes } from '../controller/controller';
+import { View, ScrollView, SafeAreaView, TouchableOpacity,Text } from 'react-native';
+import { Card } from 'react-native-elements'
+import Icon from 'react-native-vector-icons/MaterialIcons'
+import styles from '../styleSheet'
 
 export default class DisplayNotes extends Component {
-    constructor(props){
-        super(props)
-        this.state={
-            notes:[]
-        }
+  constructor(props) {
+    super(props)
+    this.state = {
+      notes: []
     }
-    componentDidMount(){
-        getNotes(notesList =>{
-            this.setState({
-                notes:notesList
-            })
-        })
-    }
-    render () {
-        let noteArray = [];
-        noteArray = this.state.notes.map((note)=> {
-            let key = note;
-            let noteData = this.state.note[key];
-            return (
-                <DisplayCards note={noteData}
-                    index={key} 
-                    />
-            )
-        })
-        return (
-            <View style={{flexDirection: 'row',flex:1}}>
-                {noteArray}
-            </View>
-
-        )
-      }
+  }
+  render() {
+    return (
+      <View style={{ flexDirection: 'row'}}>
+        <Card>
+         <Text>{this.props.note.title}</Text>
+         <Text>{this.props.note.description}</Text>
+        </Card>
+      </View>
+    )
+  }
 }
 

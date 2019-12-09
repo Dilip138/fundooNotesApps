@@ -3,8 +3,13 @@ import { Text, View, ActivityIndicator, Image, TouchableOpacity, TouchableHighli
 import { Card, Avatar } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import styles from '../styleSheet';
+// import DisplayNotes from './displayNotes'
 import { DrawerActions } from 'react-navigation-drawer'
 import { withNavigation } from 'react-navigation'
+import { ScrollView } from 'react-native-gesture-handler';
+import DisplayNotes from './displayNotes';
+import { getNotes } from '../controller/controller';
+// import DisplayNotes from './displayNotes';
 
 class DashBoard extends Component {
     constructor(props) {
@@ -23,6 +28,22 @@ class DashBoard extends Component {
             />
         ),
     };
+    componentDidMount() {
+    //  getNotes(noteList => {
+    //         this.setState({
+    //             notes: noteList
+    //         })
+    //         console.warn("gNotes", noteList)
+    //         console.warn("gNotes", gNotes)
+    //         console.warn("gNotes", notes)
+    //         console.warn("noteList in component did mount", this.state.notes);     
+    // })
+    getNotes().then((res)=>{
+        console.warn("res in view ",res);
+        
+    })
+}
+
     handleDrawerOpen = () => {
         this.setState({
             open: true
@@ -34,6 +55,16 @@ class DashBoard extends Component {
         })
     }
     render() {
+        let noteArray = [];
+        noteArray = this.state.notes.map((note) => {
+            let key = note
+            let noteData = this.state.notes[key]
+            return (
+                <DisplayNotes note={noteData}
+                    index={key}
+                />
+            )
+        })
         return (
             //     <View>
             //         <ActivityIndicator size="large" color="green" />
@@ -70,7 +101,7 @@ class DashBoard extends Component {
                                 </View>
                             )}
                         <View>
-                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('signOut')}}>
+                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('signOut') }}>
                                 <Image style={styles.icon1}
                                     source={require('../assets/profile.png')}
                                 />
@@ -78,6 +109,11 @@ class DashBoard extends Component {
                         </View>
                     </View>
                 </Card>
+                <ScrollView>
+                    <View style={{flexDirection:'row'}}>
+                        {noteArray}
+                    </View>
+                </ScrollView>
                 <View style={styles.footer}>
                     <TouchableHighlight style={styles.imageIcon}>
                         {/* onPress={() => { this.props.navigation.dispatch(DrawerActions.openDrawer()) }} */}
@@ -95,7 +131,7 @@ class DashBoard extends Component {
                             style={styles.image} />
                     </TouchableHighlight>
                     <TouchableHighlight style={styles.imageIcon}
-                        onPress={() => { this.props.navigation.navigate('takeNotes')}}>
+                        onPress={() => { this.props.navigation.navigate('takeNotes') }}>
                         <Image source={require('../assets/plus.jpg')}
                             style={styles.image1} />
                     </TouchableHighlight>
