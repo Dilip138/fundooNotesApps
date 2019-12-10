@@ -17,6 +17,7 @@ class DashBoard extends Component {
         this.state = {
             open: false,
             notes: [],
+            click:false
         }
     }
     static navigationOptions = {
@@ -29,21 +30,13 @@ class DashBoard extends Component {
         ),
     };
     componentDidMount() {
-    //  getNotes(noteList => {
-    //         this.setState({
-    //             notes: noteList
-    //         })
-    //         console.warn("gNotes", noteList)
-    //         console.warn("gNotes", gNotes)
-    //         console.warn("gNotes", notes)
-    //         console.warn("noteList in component did mount", this.state.notes);     
-    // })
-    getNotes().then((res)=>{
-        console.warn("res in view ",res);
-        
-    })
-}
-
+        getNotes().then((res) => {
+            this.setState({
+                note: res
+            })
+            console.warn("res in view ", res);
+        })
+    }
     handleDrawerOpen = () => {
         this.setState({
             open: true
@@ -55,15 +48,20 @@ class DashBoard extends Component {
         })
     }
     render() {
-        let noteArray = [];
-        noteArray = this.state.notes.map((note) => {
-            let key = note
-            let noteData = this.state.notes[key]
-            return (
-                <DisplayNotes note={noteData}
-                    index={key}
-                />
-            )
+        var arr1 = []
+        var key;
+        var data;
+        arr1 =this.state.notes.map((notes) => {
+            key = notes;
+            data = this.state.note[key]
+           // console.warn(data)
+                return (
+                        <DisplayNotes note={data}
+                            notekey={key}
+                            // view={this.state.click}
+                            // navigation={this.props.navigation}
+                        />
+                )
         })
         return (
             //     <View>
@@ -110,8 +108,9 @@ class DashBoard extends Component {
                     </View>
                 </Card>
                 <ScrollView>
-                    <View style={{flexDirection:'row'}}>
-                        {noteArray}
+                    <View><Text style={styles.margin}>other</Text></View>
+                    <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+                        {arr1}
                     </View>
                 </ScrollView>
                 <View style={styles.footer}>

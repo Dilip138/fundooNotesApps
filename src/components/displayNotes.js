@@ -13,8 +13,8 @@ export default class DisplayNotes extends Component {
   }
   render() {
     return (
-      <View style={{ flexDirection: 'row'}}>
-        <Card>
+      <View >
+        <Card containerStyle={{borderRadius: 10 }}>
          <Text>{this.props.note.title}</Text>
          <Text>{this.props.note.description}</Text>
         </Card>

@@ -54,34 +54,38 @@ export async function userForgot(user) {
         console.log(error.toString())
     }
 }
+
 export async function createNotes(noteData) {
+    let data ={
+        title:noteData.title,
+        description:noteData.description
+    }
     console.warn("res in notedata", noteData)
     try {
-        let data = {
-            title: noteData.title,
-            description: noteData.description,
-        }
-        console.warn("res in data", data);
-        let currentId = await firebaseData.auth().currentUser.uid;
-        console.warn("res in currentuser", currentId);
-        let res = await db.collection('notes').doc(currentId).set(data)
-        console.warn("res in notes", res)
+        let res;
+        await db.collection('notes').add(data)
+            .then((value) => {
+                console.log("Document written with ID: ", value.id);
+                res = value.id;
+            })
+        return res;
     }
     catch (error) {
         console.log(error.toString());
     }
 }
 export async function getNotes() {
-    let note;
-   await db.collection('notes').get().then((value) => {
+    let note=[];
+    await db.collection('notes').get().then((value) => {
+        console.warn("value",value.title);
+        
         value.forEach((noteData) => {
             console.warn("notedata in controller", noteData.data())
-            note =noteData.data()
-            console.warn("res in note",note)
+            note.push(noteData.data())
         })
-    })  
-    console.warn("res in note1",note)
-    return note
+    })
+    console.warn("res in note", note)
+    return note;
 }
 //check logOut for user authentication
 export async function userSignOut() {

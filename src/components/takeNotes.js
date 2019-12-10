@@ -10,9 +10,13 @@ export default class TakeNote extends Component {
         this.state = {
             description: [],
             title: '',
-            pin: ''
+            pin: '',
+            dialogVisible: false,
         }
     }
+    showDialog = () => {
+        this.setState({ dialogVisible: true });
+    };
     getpin() {
         this.setState({
             pin: !this.state.pin
@@ -77,7 +81,7 @@ export default class TakeNote extends Component {
                                     <Image style={styles.image2} source={require('../assets/unpin.png')}></Image>
                                 </TouchableOpacity>
                             )}
-                        <TouchableOpacity onPress={(event) => this.getArchive(event)}>
+                        <TouchableOpacity onPress={(event) => this.showDialog(event)}>
                             <Image style={styles.image2} source={require('../assets/alert.png')}></Image>
                         </TouchableOpacity>
                         <TouchableOpacity onPress={(event) => this.getArchive(event)}>
