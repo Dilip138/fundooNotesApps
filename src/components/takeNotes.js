@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Image, Text, TextInput } from 'react-native'
+import { View, TouchableOpacity, Image, Text, TextInput, Picker } from 'react-native'
 import styles from '../styleSheet';
 import Snackbar from 'react-native-snackbar';
 import { createNotes } from '../controller/controller';
+import Dialog from 'react-native-dialog';
+import DateTimePicker from "react-native-modal-datetime-picker";
 
 export default class TakeNote extends Component {
     constructor(props) {
@@ -11,12 +13,52 @@ export default class TakeNote extends Component {
             description: [],
             title: '',
             pin: '',
+            isDatePickerVisible: false,
             dialogVisible: false,
+            reminder: '',
+            PickerValue: '',
+            isTimePickerVisible: false,
+            date:'',
+            time:''
         }
     }
     showDialog = () => {
         this.setState({ dialogVisible: true });
     };
+    handleCancel = () => {
+        this.setState({ dialogVisible: false });
+    };
+    // The user has pressed the "Delete" button, so here you can do your own logic
+    handleSave = () => {
+        let date = this.state.date + '  ' + this.state.time
+        console.warn(date + " in take date")
+        if (date !== '') {
+            this.setState({
+                reminder: date,
+                dialogVisible: false
+            });
+        };
+    };
+    showDatePicker = () => {
+        this.setState({ isDatePickerVisible: true });
+    };
+    hideDatePicker = () => {
+        this.setState({ isDatePickerVisible: false });
+    };
+    showTimePicker = () => {
+        this.setState({ isTimePickerVisible: true });
+    }
+    hideTimePicker = () => {
+        this.setState({ isTimePickerVisible: false });
+    }
+    handleDatePicked = date => {
+        console.log("A date has been picked: ", date);
+        this.hideDatePicker();
+    };
+    handleTimePicked = time => {
+        console.log("A date has been picked: ", time);
+        this.hideTimePicker();
+    }
     getpin() {
         this.setState({
             pin: !this.state.pin
@@ -24,14 +66,14 @@ export default class TakeNote extends Component {
     }
     onSubmit = () => {
         try {
-            if (this.state.notes === '') {
-                Snackbar.show({
-                    title: 'Enter the notes'
-                })
-            }
-            else if (this.state.title === '') {
+            if (this.state.title === '') {
                 Snackbar.show({
                     title: 'Enter the Title'
+                })
+            }
+            else if (this.state.description === '') {
+                Snackbar.show({
+                    title: 'Enter the Description'
                 })
             }
             else {
@@ -95,13 +137,13 @@ export default class TakeNote extends Component {
                         placeholder="Title"
                         placeholderTextColor="#a1a5a3"
                         onChangeText={(title) => this.setState({ title })}
-                        value={this.state.Title}
+                        value={this.state.title}
                     />
                     <TextInput placeholder="Description"
                         style={{ fontSize: 15 }}
                         placeholderTextColor="#a1a5a3"
                         onChangeText={(description) => this.setState({ description })}
-                        value={this.state.notes}
+                        value={this.state.description}
                     />
                     <Text>{this.state.reminder}</Text>
                 </View>
@@ -117,8 +159,46 @@ export default class TakeNote extends Component {
                     </TouchableOpacity>
                     <TouchableOpacity onPress={() => { this.getmenu() }}>
                         <Image style={styles.image2} source={require('../assets/menu1.png')}></Image>
-
                     </TouchableOpacity>
+                    <Dialog.Container visible={this.state.dialogVisible}>
+                        <Dialog.Title> Add reminder</Dialog.Title>
+                        <View>
+                            <Picker
+                                style={{ width: '100%' }}
+                                selectedValue={this.state.PickerValue}
+                                onValueChange={(itemValue, itemIndex) =>
+                                    this.setState({ PickerValue: itemValue })} >
+                                <Picker.Item label="Select timing" value="" />
+                                <Picker.Item label='Today 8pm' value='Today 8pm' />
+                                <Picker.Item label="Tommorow 9am" value="Tommorow 9am" />
+                                <Picker.Item label="Next Thrusday" value="Next Thrusday" />
+                            </Picker>
+                        </View>
+                        <View style={{marginLeft:8}}>
+                            <TouchableOpacity onPress={this.showDatePicker}>
+                                <Text >Select Date</Text>
+                            </TouchableOpacity>
+                            <Text>{this.state.date}</Text>
+                            <DateTimePicker 
+                                mode='date'
+                                isVisible={this.state.isDatePickerVisible}
+                                onConfirm={this.handleDatePicked}
+                                onCancel={this.hideDatePicker} />
+                        </View>
+                        <View style={{marginTop:20,marginLeft:8}} >
+                            <TouchableOpacity onPress={this.showTimePicker}>
+                                <Text >Select Time</Text>
+                            </TouchableOpacity>
+                            <Text>{this.state.time}</Text>
+                            <DateTimePicker
+                                mode='time'
+                                isVisible={this.state.isTimePickerVisible}
+                                onConfirm={this.handleTimePicked}
+                                onCancel={this.hideTimePicker} />
+                        </View>
+                        <Dialog.Button label="Cancel" onPress={this.handleCancel} />
+                        <Dialog.Button label="save" onPress={this.handleSave} />
+                    </Dialog.Container>
                 </View>
             </View>
         );

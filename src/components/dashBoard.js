@@ -1,23 +1,20 @@
 import React, { Component } from 'react';
-import { Text, View, ActivityIndicator, Image, TouchableOpacity, TouchableHighlight } from 'react-native'
-import { Card, Avatar } from 'react-native-elements'
+import { Text, View, ActivityIndicator, Image, TouchableOpacity, TouchableHighlight, SafeAreaView } from 'react-native'
+import { Card } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import styles from '../styleSheet';
-// import DisplayNotes from './displayNotes'
 import { DrawerActions } from 'react-navigation-drawer'
 import { withNavigation } from 'react-navigation'
 import { ScrollView } from 'react-native-gesture-handler';
 import DisplayNotes from './displayNotes';
 import { getNotes } from '../controller/controller';
-// import DisplayNotes from './displayNotes';
 
 class DashBoard extends Component {
     constructor(props) {
         super(props)
         this.state = {
             open: false,
-            notes: [],
-            click:false
+            note: [],
         }
     }
     static navigationOptions = {
@@ -34,7 +31,6 @@ class DashBoard extends Component {
             this.setState({
                 note: res
             })
-            console.warn("res in view ", res);
         })
     }
     handleDrawerOpen = () => {
@@ -48,26 +44,20 @@ class DashBoard extends Component {
         })
     }
     render() {
-        var arr1 = []
-        var key;
-        var data;
-        arr1 =this.state.notes.map((notes) => {
-            key = notes;
-            data = this.state.note[key]
-           // console.warn(data)
-                return (
-                        <DisplayNotes note={data}
-                            notekey={key}
-                            // view={this.state.click}
-                            // navigation={this.props.navigation}
-                        />
-                )
+        let arr = []
+        let key;
+        arr = this.state.note.map((notes) => {
+            //console.warn("res in map", notes)
+            return (
+                <DisplayNotes display={notes}
+                    notekey={key}
+                    view={this.state.open}
+                />
+            )
         })
         return (
-            //     <View>
-            //         <ActivityIndicator size="large" color="green" />
-
-            <View style={styles.header}>
+            <View style={styles.header}>          
+            <ScrollView>
                 <Card containerStyle={{ borderRadius: 10, height: 55 }}>
                     <View style={styles.navBar}>
                         <View>
@@ -93,7 +83,7 @@ class DashBoard extends Component {
                                 <View>
                                     <TouchableOpacity onPress={() => this.gridList()}>
                                         <Image style={styles.icon}
-                                            source={require('../assets/list1.png')}
+                                            source={require('../assets/list.png')}
                                         />
                                     </TouchableOpacity>
                                 </View>
@@ -107,34 +97,35 @@ class DashBoard extends Component {
                         </View>
                     </View>
                 </Card>
-                <ScrollView>
-                    <View><Text style={styles.margin}>other</Text></View>
                     <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
-                        {arr1}
+                        {arr}
                     </View>
                 </ScrollView>
                 <View style={styles.footer}>
-                    <TouchableHighlight style={styles.imageIcon}>
-                        {/* onPress={() => { this.props.navigation.dispatch(DrawerActions.openDrawer()) }} */}
-                        <Image source={require('../assets/checkbox.png')}
-                            style={styles.image} />
-                    </TouchableHighlight>
-                    <TouchableHighlight style={styles.imageIcon}>
-                        {/* onPress={() => this.props.navigation.navigate('Edit', [this.props.uid, {}])} */}
-                        <Image source={require('../assets/brush.png')}
-                            style={styles.image} />
-                    </TouchableHighlight>
-                    <TouchableHighlight style={styles.imageIcon}>
-                        {/* onPress={() => this.props.navigation.navigate('Edit', [this.props.uid, {}])} */}
-                        <Image source={require('../assets/photo.png')}
-                            style={styles.image} />
-                    </TouchableHighlight>
-                    <TouchableHighlight style={styles.imageIcon}
-                        onPress={() => { this.props.navigation.navigate('takeNotes') }}>
-                        <Image source={require('../assets/plus.jpg')}
-                            style={styles.image1} />
-                    </TouchableHighlight>
-
+                    <View style={styles.data3}>
+                        <TouchableHighlight style={styles.imageIcon}>
+                            {/* onPress={() => { this.props.navigation.dispatch(DrawerActions.openDrawer()) }} */}
+                            <Image source={require('../assets/checkbox.png')}
+                                style={styles.image} />
+                        </TouchableHighlight>
+                        <TouchableHighlight style={styles.imageIcon}>
+                            {/* onPress={() => this.props.navigation.navigate('Edit', [this.props.uid, {}])} */}
+                            <Image source={require('../assets/brush.png')}
+                                style={styles.image} />
+                        </TouchableHighlight>
+                        <TouchableHighlight style={styles.imageIcon}>
+                            {/* onPress={() => this.props.navigation.navigate('Edit', [this.props.uid, {}])} */}
+                            <Image source={require('../assets/photo.png')}
+                                style={styles.image} />
+                        </TouchableHighlight>
+                    </View>
+                    <View style={styles.plus}>
+                        <TouchableHighlight style={styles.imageIcon}
+                            onPress={() => { this.props.navigation.navigate('takeNotes') }}>
+                            <Image source={require('../assets/plus2.jpg')}
+                                style={styles.image1} />
+                        </TouchableHighlight>
+                    </View>
                 </View>
             </View>
         );

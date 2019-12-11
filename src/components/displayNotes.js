@@ -1,22 +1,29 @@
 import React, { Component } from 'react';
-import { View, ScrollView, SafeAreaView, TouchableOpacity,Text } from 'react-native';
+import { View, TouchableOpacity, Text } from 'react-native';
 import { Card } from 'react-native-elements'
-import Icon from 'react-native-vector-icons/MaterialIcons'
 import styles from '../styleSheet'
 
 export default class DisplayNotes extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      notes: []
+      click:false,
     }
   }
   render() {
+    let take = this.props.view ? (styles.grid) : (styles.list)
+    // console.warn("display",this.props.display)
     return (
-      <View >
-        <Card containerStyle={{borderRadius: 10 }}>
-         <Text>{this.props.note.title}</Text>
-         <Text>{this.props.note.description}</Text>
+      <View style={take}>
+        <Card containerStyle={{ borderRadius: 10 }}>
+          <View>
+            <View style={{ padding: 5 }}>
+              <Text>{this.props.display.title}</Text>
+            </View>
+            <View style={{ padding: 5 }}>
+              <Text>{this.props.display.description}</Text>
+            </View>
+          </View>
         </Card>
       </View>
     )

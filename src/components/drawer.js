@@ -2,7 +2,7 @@ import { createAppContainer } from "react-navigation";
 import Trash from '../components/trash';
 import Archive from './archive';
 import DashBoard from "../components/dashBoard";
-import Remainder from '../components/remainder'
+import Reminder from './reminder'
 import { createDrawerNavigator } from "react-navigation-drawer";
 
 const drawer = createDrawerNavigator({
@@ -10,7 +10,7 @@ const drawer = createDrawerNavigator({
         screen: DashBoard,
     },
     remainder: {
-        screen: Remainder,
+        screen: Reminder,
     },
     archive: {
         screen: Archive

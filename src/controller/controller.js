@@ -8,9 +8,11 @@
 ******************************************************************************************/
 import firebaseData from "../configure/firebaseConfig";
 import EventEmitter from 'react-native-eventemitter'
-import { AsyncStorage } from "react-native";
 let db = firebaseData.firestore();
-//create emailId and password for authentication
+/**
+ * 
+ * @param {create emailId and password for authentication} user 
+ */
 export async function userSignUp(user) {
     try {
         let data = {
@@ -24,7 +26,6 @@ export async function userSignUp(user) {
         let addData = await db.collection('user').doc(currentUser).set(data);
         console.warn("user in services ", res);
         //check the Email verification
-        //const emitter = new EventEmitter();
         function emailVerification() {
             firebaseData.auth().currentUser.sendEmailVerification()
         }
@@ -35,7 +36,10 @@ export async function userSignUp(user) {
         console.log(error.toString(error));
     }
 };
-//check emailId and password for authentication
+/**
+ * 
+ * @param {check emailId and password for authentication} user 
+ */
 export async function userLogin(user) {
     try {
         await firebaseData.auth().signInWithEmailAndPassword(user.email, user.password);
@@ -45,7 +49,10 @@ export async function userLogin(user) {
         console.log(error.toString())
     }
 }
-//check email for paswwordReset authentication
+/**
+ * 
+ * @param {check email for paswwordReset authentication} user 
+ */
 export async function userForgot(user) {
     try {
         await firebaseData.auth().sendPasswordResetEmail(user.email)
@@ -54,13 +61,16 @@ export async function userForgot(user) {
         console.log(error.toString())
     }
 }
-
+/**
+ * 
+ * @param {createNotes title and description for authentication} noteData 
+ */
 export async function createNotes(noteData) {
-    let data ={
-        title:noteData.title,
-        description:noteData.description
+    let data = {
+        title: noteData.title,
+        description: noteData.description,
+        currentUser: firebaseData.auth().currentUser.email
     }
-    console.warn("res in notedata", noteData)
     try {
         let res;
         await db.collection('notes').add(data)
@@ -74,17 +84,16 @@ export async function createNotes(noteData) {
         console.log(error.toString());
     }
 }
+//getNotes for user authentication
 export async function getNotes() {
-    let note=[];
+    let note = [];
     await db.collection('notes').get().then((value) => {
-        console.warn("value",value.title);
-        
         value.forEach((noteData) => {
-            console.warn("notedata in controller", noteData.data())
+            //console.warn("notedata in controller", noteData.data())
             note.push(noteData.data())
         })
     })
-    console.warn("res in note", note)
+    // console.warn("res in note", note)
     return note;
 }
 //check logOut for user authentication

@@ -67,8 +67,17 @@ export default StyleSheet.create({
   footer: {
     backgroundColor: "#fff",
     flexDirection: 'row',
+    justifyContent:'space-between',
     elevation: 5,
     height: 50
+  },
+  data3:{
+   flexDirection:'row',   
+  },
+  plus:{
+    flexDirection:'row',
+    marginRight:15,
+    marginTop:-71
   },
   imageIcon: {
     margin: 15,
@@ -79,8 +88,8 @@ export default StyleSheet.create({
     height: 24,
   },
   image1: {
-    width: 40,
-    height: 40,
+    width: 65,
+    height: 65,
   },
   Icon:
   {
@@ -139,5 +148,11 @@ export default StyleSheet.create({
     marginBottom: 8,
     flexDirection: 'row',
     justifyContent: 'space-between'
+  },
+  grid:{
+    width:'40%'
+  },
+  list:{
+    width:'100%'
   },
 });
