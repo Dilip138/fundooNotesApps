@@ -57,8 +57,9 @@ export default StyleSheet.create({
     height: 20,
   },
   icon1: {
-    width: 30,
-    height: 30,
+    width: 25,
+    height: 25,
+    marginLeft:25
   },
   navBar: {
     flexDirection: 'row',
@@ -150,7 +151,7 @@ export default StyleSheet.create({
     justifyContent: 'space-between'
   },
   grid:{
-    width:'40%'
+    width:'50%'
   },
   list:{
     width:'100%'

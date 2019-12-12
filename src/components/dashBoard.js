@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, ActivityIndicator, Image, TouchableOpacity, TouchableHighlight, SafeAreaView } from 'react-native'
+import { Text, View, Image, TouchableOpacity, TouchableHighlight, } from 'react-native'
 import { Card } from 'react-native-elements'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import styles from '../styleSheet';
@@ -56,47 +56,50 @@ class DashBoard extends Component {
             )
         })
         return (
-            <View style={styles.header}>          
-            <ScrollView>
-                <Card containerStyle={{ borderRadius: 10, height: 55 }}>
-                    <View style={styles.navBar}>
-                        <View>
-                            <TouchableOpacity
-                                onPress={() =>
-                                    this.props.navigation.dispatch(DrawerActions.openDrawer())}>
-                                <Icon name="menu" size={26} />
-                            </TouchableOpacity>
-                        </View>
-                        <View>
-                            <TouchableOpacity onPress={() => this.props.navigation.navigate('search')}>
-                                <Text>Search your notes </Text>
-                            </TouchableOpacity>
-                        </View>
-                        {!this.state.open ?
-                            (<View>
-                                <TouchableOpacity onPress={() => this.gridList()}>
-                                    <Image source={require('../assets/grid.png')}
-                                        style={styles.icon} />
-                                </TouchableOpacity>
-                            </View>
-                            ) : (
+            <View style={styles.header}>
+                <ScrollView>
+                    <Card containerStyle={{ borderRadius: 10, height: 55 }}>
+                        <View style={styles.navBar}>
+                            <View style={{ flexDirection: 'row' }}>
                                 <View>
-                                    <TouchableOpacity onPress={() => this.gridList()}>
-                                        <Image style={styles.icon}
-                                            source={require('../assets/list.png')}
+                                    <TouchableOpacity
+                                        onPress={() =>
+                                            this.props.navigation.dispatch(DrawerActions.openDrawer())}>
+                                        <Icon name="menu" size={26} />
+                                    </TouchableOpacity>
+                                </View>
+                                <View style={{ marginLeft: 25 }}>
+                                    <TouchableOpacity onPress={() => this.props.navigation.navigate('search')}>
+                                        <Text style={{ fontSize: 17 }}>Search your notes </Text>
+                                    </TouchableOpacity>
+                                </View>
+                            </View>
+                            <View style={{ flexDirection: 'row' }}>
+                                {!this.state.open ?
+                                    (<View>
+                                        <TouchableOpacity onPress={() => this.gridList()}>
+                                            <Image source={require('../assets/grid.png')}
+                                                style={styles.icon} />
+                                        </TouchableOpacity>
+                                    </View>
+                                    ) : (
+                                        <View>
+                                            <TouchableOpacity onPress={() => this.gridList()}>
+                                                <Image style={styles.icon}
+                                                    source={require('../assets/list.png')} />
+                                            </TouchableOpacity>
+                                        </View>
+                                    )}
+                                <View>
+                                    <TouchableOpacity onPress={() => { this.props.navigation.navigate('signOut') }}>
+                                        <Image style={styles.icon1}
+                                            source={require('../assets/profile.png')}
                                         />
                                     </TouchableOpacity>
                                 </View>
-                            )}
-                        <View>
-                            <TouchableOpacity onPress={() => { this.props.navigation.navigate('signOut') }}>
-                                <Image style={styles.icon1}
-                                    source={require('../assets/profile.png')}
-                                />
-                            </TouchableOpacity>
+                            </View>
                         </View>
-                    </View>
-                </Card>
+                    </Card>
                     <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
                         {arr}
                     </View>
@@ -104,17 +107,14 @@ class DashBoard extends Component {
                 <View style={styles.footer}>
                     <View style={styles.data3}>
                         <TouchableHighlight style={styles.imageIcon}>
-                            {/* onPress={() => { this.props.navigation.dispatch(DrawerActions.openDrawer()) }} */}
                             <Image source={require('../assets/checkbox.png')}
                                 style={styles.image} />
                         </TouchableHighlight>
                         <TouchableHighlight style={styles.imageIcon}>
-                            {/* onPress={() => this.props.navigation.navigate('Edit', [this.props.uid, {}])} */}
                             <Image source={require('../assets/brush.png')}
                                 style={styles.image} />
                         </TouchableHighlight>
                         <TouchableHighlight style={styles.imageIcon}>
-                            {/* onPress={() => this.props.navigation.navigate('Edit', [this.props.uid, {}])} */}
                             <Image source={require('../assets/photo.png')}
                                 style={styles.image} />
                         </TouchableHighlight>

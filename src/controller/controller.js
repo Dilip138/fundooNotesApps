@@ -63,12 +63,13 @@ export async function userForgot(user) {
 }
 /**
  * 
- * @param {createNotes title and description for authentication} noteData 
+ * @param {createNotes title, description and reminder for authentication} noteData 
  */
 export async function createNotes(noteData) {
     let data = {
         title: noteData.title,
         description: noteData.description,
+        reminder:noteData.reminder,
         currentUser: firebaseData.auth().currentUser.email
     }
     try {

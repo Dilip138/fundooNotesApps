@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Text, TouchableOpacity, View,Image } from "react-native";
+import { Text, TouchableOpacity, View, Image } from "react-native";
 import Dialog from "react-native-dialog";
 import styles from '../styleSheet'
 

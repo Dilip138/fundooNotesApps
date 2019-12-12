@@ -10,7 +10,7 @@ export default class TakeNote extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            description: [],
+            description: '',
             title: '',
             pin: '',
             isDatePickerVisible: false,
@@ -18,8 +18,8 @@ export default class TakeNote extends Component {
             reminder: '',
             PickerValue: '',
             isTimePickerVisible: false,
-            date:'',
-            time:''
+            date: '',
+            time: ''
         }
     }
     showDialog = () => {
@@ -28,13 +28,13 @@ export default class TakeNote extends Component {
     handleCancel = () => {
         this.setState({ dialogVisible: false });
     };
-    // The user has pressed the "Delete" button, so here you can do your own logic
+    // The user has pressed the "Save" button, so save the date and time with notes
     handleSave = () => {
-        let date = this.state.date + '  ' + this.state.time
-        console.warn(date + " in take date")
-        if (date !== '') {
+        let dateTime = this.state.date + '  ' + this.state.time
+        console.warn(dateTime + " in take date")
+        if (dateTime !== '') {
             this.setState({
-                reminder: date,
+                reminder: dateTime,
                 dialogVisible: false
             });
         };
@@ -53,10 +53,20 @@ export default class TakeNote extends Component {
     }
     handleDatePicked = date => {
         console.log("A date has been picked: ", date);
+        let date1 = '' + date
+        let date2 = date1.slice(4, 10)
+        this.setState({
+            date: date2
+        })
         this.hideDatePicker();
     };
     handleTimePicked = time => {
-        console.log("A date has been picked: ", time);
+        console.log("A time has been picked: ", time);
+        let time1 = '' + time
+        let time2 = time1.slice(16, 21)
+        this.setState({
+            time: time2
+        })
         this.hideTimePicker();
     }
     getpin() {
@@ -80,9 +90,9 @@ export default class TakeNote extends Component {
                 let data = {
                     title: this.state.title,
                     description: this.state.description,
+                    reminder: this.state.reminder,
                 }
                 console.warn("res in data", data);
-
                 createNotes(data)
                     .then((res) => {
                         console.log("res in Notes", res);
@@ -99,7 +109,6 @@ export default class TakeNote extends Component {
             }
         } catch (error) {
             console.log(error.toString());
-
         }
     }
     render() {
@@ -137,14 +146,12 @@ export default class TakeNote extends Component {
                         placeholder="Title"
                         placeholderTextColor="#a1a5a3"
                         onChangeText={(title) => this.setState({ title })}
-                        value={this.state.title}
-                    />
+                        value={this.state.title} />
                     <TextInput placeholder="Description"
                         style={{ fontSize: 15 }}
                         placeholderTextColor="#a1a5a3"
                         onChangeText={(description) => this.setState({ description })}
-                        value={this.state.description}
-                    />
+                        value={this.state.description} />
                     <Text>{this.state.reminder}</Text>
                 </View>
                 {/* <Menu
@@ -163,31 +170,31 @@ export default class TakeNote extends Component {
                     <Dialog.Container visible={this.state.dialogVisible}>
                         <Dialog.Title> Add reminder</Dialog.Title>
                         <View>
-                            <Picker
-                                style={{ width: '100%' }}
-                                selectedValue={this.state.PickerValue}
-                                onValueChange={(itemValue, itemIndex) =>
-                                    this.setState({ PickerValue: itemValue })} >
-                                <Picker.Item label="Select timing" value="" />
-                                <Picker.Item label='Today 8pm' value='Today 8pm' />
-                                <Picker.Item label="Tommorow 9am" value="Tommorow 9am" />
-                                <Picker.Item label="Next Thrusday" value="Next Thrusday" />
-                            </Picker>
-                        </View>
-                        <View style={{marginLeft:8}}>
                             <TouchableOpacity onPress={this.showDatePicker}>
-                                <Text >Select Date</Text>
+                                <Picker
+                                    style={{ width: '100%' }}
+                                    selectedValue={this.state.PickerValue}
+                                    onValueChange={(itemValue, itemIndex) =>
+                                        this.setState({ PickerValue: itemValue })} >
+                                    <Picker.Item label="Pick a date..." />
+                                </Picker>
                             </TouchableOpacity>
                             <Text>{this.state.date}</Text>
-                            <DateTimePicker 
+                            <DateTimePicker
                                 mode='date'
                                 isVisible={this.state.isDatePickerVisible}
                                 onConfirm={this.handleDatePicked}
                                 onCancel={this.hideDatePicker} />
                         </View>
-                        <View style={{marginTop:20,marginLeft:8}} >
+                        <View>
                             <TouchableOpacity onPress={this.showTimePicker}>
-                                <Text >Select Time</Text>
+                                <Picker
+                                    style={{ width: '100%' }}
+                                    selectedValue={this.state.PickerValue}
+                                    onValueChange={(itemValue, itemIndex) =>
+                                        this.setState({ PickerValue: itemValue })} >
+                                    <Picker.Item label="Pick a time..." />
+                                </Picker>
                             </TouchableOpacity>
                             <Text>{this.state.time}</Text>
                             <DateTimePicker

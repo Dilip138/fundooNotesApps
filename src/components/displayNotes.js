@@ -23,6 +23,9 @@ export default class DisplayNotes extends Component {
             <View style={{ padding: 5 }}>
               <Text>{this.props.display.description}</Text>
             </View>
+            <View style={{ padding: 5 }}>
+              <Text>{this.props.display.reminder}</Text>
+            </View>
           </View>
         </Card>
       </View>

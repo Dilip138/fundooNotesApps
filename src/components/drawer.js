@@ -20,8 +20,8 @@ const drawer = createDrawerNavigator({
     },
 },
     {
-        drawerPosition: 'left',
         drawerWidth: 280,
+        drawerPosition:'left',
         contentOptions: {
             activeTintColor: '#ffffff',
             inactiveTintColor: '#1999CE',

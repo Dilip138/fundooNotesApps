@@ -68,6 +68,7 @@ const AppNavigator = createStackNavigator({
             header: null
         }
     },
+    //calling the displayNotes component
     displayNotes: {
         screen: DisplayNotes,
         navigationOptions: {
