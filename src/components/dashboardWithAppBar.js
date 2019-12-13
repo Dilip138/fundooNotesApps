@@ -4,18 +4,19 @@ import { Card } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from '../styleSheet';
 import { DrawerActions } from 'react-navigation-drawer';
-import { withNavigation } from 'react-navigation';
 import { ScrollView } from 'react-native-gesture-handler';
-import DisplayNotes from './displayNotes';
-import Dialog from 'react-native-dialog';
 import { getNotes } from '../controller/controller';
+import Dialog from 'react-native-dialog'
 
-class DashBoard extends Component {
+class DashBoardWithAppBar extends Component {
     constructor(props) {
         super(props)
         this.state = {
             open: false,
             note: [],
+            click: false,
+            count: 0
+
         }
     }
     static navigationOptions = {
@@ -39,23 +40,52 @@ class DashBoard extends Component {
             open: !this.state.open
         })
     }
+
+    longPressClick = () => {
+        this.setState({
+            click: true,
+            count: (this.state.count) + 1
+        })
+
+    }
+    onPressBack = () => {
+        this.setState({
+            click: !(this.state.click),
+            count: 0
+        })
+    }
     render() {
         let arr = []
         let key;
         arr = this.state.note.map((notes) => {
-            //console.warn("res in map", notes)
+            console.log("res in map1", notes)
+            let take = this.state.open ? (styles.grid) : (styles.list)
             return (
-                <DisplayNotes display={notes}
-                    notekey={key}
-                    view={this.state.open}
-                />
+                <View style={take}>
+                    <TouchableOpacity onLongPress={this.longPressClick} >
+                        <Card containerStyle={{ borderWidth: 2, borderColor: "black", borderRadius: 10 }}>
+                            <View>
+                                <View style={{ padding: 5 }}>
+                                    <Text>{notes.title}</Text>
+                                </View>
+                                <View style={{ padding: 5 }}>
+                                    <Text>{notes.description}</Text>
+                                </View>
+                                <View style={{ padding: 5 }}>
+                                    <Text>{notes.reminder}</Text>
+                                </View>
+                            </View>
+                        </Card>
+                    </TouchableOpacity>
+                </View>
             )
         })
         return (
             <View style={styles.header}>
                 <ScrollView>
-                    {(this.props.view) ?
-                        (<Card containerStyle={{ borderRadius: 10, height: 55 }}>
+
+                    {(!this.state.click) ?
+                        (<Card containerStyle={{ borderRadius: 10, height: 55, borderWidth: 2 }}>
                             <View style={styles.navBar}>
                                 <View style={{ flexDirection: 'row' }}>
                                     <View>
@@ -97,28 +127,33 @@ class DashBoard extends Component {
                                 </View>
                             </View>
                         </Card>) :
-                        (
-                            <View style={styles.appBar}>
-                                <View style={{ margin: 15 }}>
-                                    <TouchableOpacity>
-                                        <Image style={styles.image} source={require('../assets/clear.png')} />
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={{ margin: 15 }}>
-                                    <TouchableOpacity onPress={this.showDialog}>
-                                        <Image style={styles.image} source={require('../assets/menu1.png')} />
-                                    </TouchableOpacity>
-                                </View>
-                                <Dialog.Container visible={this.state.dialogVisible}>
-                                    <TouchableOpacity onPress={this.showDialog}>
-                                        <Text>Archive</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={this.showDialog}>
-                                        <Text>Delete</Text>
-                                    </TouchableOpacity>
-                                </Dialog.Container>
+                        (<View style={styles.appBar}>
+                            <View style={{ margin: 15 }}>
+                                <TouchableOpacity onPress={this.onPressBack}>
+                                    <Image style={styles.image} source={require('../assets/clear.png')} />
+                                </TouchableOpacity>
                             </View>
-                        )}
+
+                            <View style={{ margin: 15 }}>
+                                <TouchableOpacity>
+                                    <Text>{this.state.count}</Text>
+                                </TouchableOpacity>
+                            </View>
+
+                            <View style={{ margin: 15 }}>
+                                <TouchableOpacity onPress={this.showDialog}>
+                                    <Image style={styles.image} source={require('../assets/menu1.png')} />
+                                </TouchableOpacity>
+                            </View>
+                            <Dialog.Container visible={this.state.dialogVisible}>
+                                <TouchableOpacity onPress={this.showDialog}>
+                                    <Text>Archive</Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity onPress={this.showDialog}>
+                                    <Text>Delete</Text>
+                                </TouchableOpacity>
+                            </Dialog.Container>
+                        </View>)}
                     <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
                         {arr}
                     </View>
@@ -150,4 +185,4 @@ class DashBoard extends Component {
         );
     }
 }
-export default DashBoard;
+export default DashBoardWithAppBar;

@@ -16,7 +16,7 @@ import AppContainer from './components/drawer';
 import TakeNote from './components/takeNotes';
 import SignOut from './components/signOut';
 import DisplayNotes from './components/displayNotes';
-
+import DashboardWithAppBar from './components/dashboardWithAppBar';
 const AppNavigator = createStackNavigator({
     //calling the login component
     login: {
@@ -54,9 +54,9 @@ const AppNavigator = createStackNavigator({
             header: null
         }
     },
-    //calling the DashBoard component 
+    // calling the DashBoard component 
     dashBoard: {
-        screen: DashBoard,
+        screen: DashboardWithAppBar,
         navigationOptions: {
             header: null
         }

@@ -156,4 +156,12 @@ export default StyleSheet.create({
   list:{
     width:'100%'
   },
+  appBar:{
+    flexDirection:'row',
+    justifyContent:'space-between',
+    elevation:5,
+    height:50,
+    backgroundColor: "#fff",
+    
+  },
 });

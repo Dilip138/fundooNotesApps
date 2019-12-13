@@ -3,11 +3,13 @@ import Trash from '../components/trash';
 import Archive from './archive';
 import DashBoard from "../components/dashBoard";
 import Reminder from './reminder'
-import { createDrawerNavigator } from "react-navigation-drawer";
+import DashBoardAppBar from '../components/dashboardWithAppBar'
+import { createDrawerNavigator} from "react-navigation-drawer";
+
 
 const drawer = createDrawerNavigator({
-    notes: {
-        screen: DashBoard,
+    notes:{
+        screen:DashBoardAppBar
     },
     remainder: {
         screen: Reminder,
@@ -18,8 +20,9 @@ const drawer = createDrawerNavigator({
     trash: {
         screen: Trash
     },
+   
 },
-    {
+    { 
         drawerWidth: 280,
         drawerPosition:'left',
         contentOptions: {
