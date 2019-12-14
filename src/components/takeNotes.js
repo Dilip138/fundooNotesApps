@@ -76,17 +76,6 @@ export default class TakeNote extends Component {
     }
     onSubmit = () => {
         try {
-            if (this.state.title === '') {
-                Snackbar.show({
-                    title: 'Enter the Title'
-                })
-            }
-            else if (this.state.description === '') {
-                Snackbar.show({
-                    title: 'Enter the Description'
-                })
-            }
-            else {
                 let data = {
                     title: this.state.title,
                     description: this.state.description,

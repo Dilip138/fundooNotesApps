@@ -16,7 +16,6 @@ class DashBoardWithAppBar extends Component {
             note: [],
             click: false,
             count: 0
-
         }
     }
     static navigationOptions = {
@@ -46,7 +45,6 @@ class DashBoardWithAppBar extends Component {
             click: true,
             count: (this.state.count) + 1
         })
-
     }
     onPressBack = () => {
         this.setState({
@@ -133,26 +131,16 @@ class DashBoardWithAppBar extends Component {
                                     <Image style={styles.image} source={require('../assets/clear.png')} />
                                 </TouchableOpacity>
                             </View>
-
                             <View style={{ margin: 15 }}>
                                 <TouchableOpacity>
                                     <Text>{this.state.count}</Text>
                                 </TouchableOpacity>
                             </View>
-
                             <View style={{ margin: 15 }}>
                                 <TouchableOpacity onPress={this.showDialog}>
                                     <Image style={styles.image} source={require('../assets/menu1.png')} />
                                 </TouchableOpacity>
                             </View>
-                            <Dialog.Container visible={this.state.dialogVisible}>
-                                <TouchableOpacity onPress={this.showDialog}>
-                                    <Text>Archive</Text>
-                                </TouchableOpacity>
-                                <TouchableOpacity onPress={this.showDialog}>
-                                    <Text>Delete</Text>
-                                </TouchableOpacity>
-                            </Dialog.Container>
                         </View>)}
                     <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
                         {arr}

@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Text, TouchableOpacity, View, Image } from "react-native";
-import Dialog from "react-native-dialog";
 import styles from '../styleSheet'
 
 export default class Reminder extends Component {
@@ -18,19 +17,6 @@ export default class Reminder extends Component {
         style={styles.Icon}
       />
     ),
-  };
-  showDialog = () => {
-    this.setState({ dialogVisible: true });
-  };
-
-  handleCancel = () => {
-    this.setState({ dialogVisible: false });
-  };
-
-  handleDelete = () => {
-    // The user has pressed the "Delete" button, so here you can do your own logic.
-    // ...Your logic
-    this.setState({ dialogVisible: false });
   };
   render() {
     return (
