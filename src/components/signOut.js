@@ -33,8 +33,8 @@ export default class SignOut extends Component {
                     ></Button>
                     <Text>    </Text>
                     <Button title='No'
-                        onPress={() => this.props.navigation.navigate('drawerScreen')}
-                    ></Button>
+                        onPress={() => this.props.navigation.navigate('drawerScreen')}>
+                    </Button>
                 </View>
             </View>
 

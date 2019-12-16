@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Text } from 'react-native';
 import { Card } from 'react-native-elements'
-
 import styles from '../styleSheet'
 import DashBoard from './dashBoard';
-
 
 export default class DisplayNotes extends Component {
   constructor(props) {
@@ -19,19 +17,15 @@ export default class DisplayNotes extends Component {
     })
   }
   render() {
-    if ((this.state.click) === true) {
-      // return (
-      //   <AppBar />
-      // )
+    if ((this.state.click) == true) {
       return (
-       <DashBoard view={this.state.click}/>
+        <DashBoard view={this.state.click} />
       )
-
     }
     let take = this.props.view ? (styles.grid) : (styles.list)
     // console.warn("display",this.props.display)
     return (
-      <View style={take }>
+      <View style={take}>
         <TouchableOpacity onLongPress={this.longPressClick} >
           <Card containerStyle={{ borderRadius: 10 }}>
             <View>

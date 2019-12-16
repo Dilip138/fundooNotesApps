@@ -1,3 +1,11 @@
+/******************************************************************************************
+* @purpose : User Interface -Mobile App design to support multiple resolution for Drawer component Using React-Native
+* @file : drawer.js
+* @module : createDrawerNavigator,contentOptions
+* @author : Dilip
+* @version : 1.0
+* @since : 4-Dec-2019
+******************************************************************************************/
 import { createAppContainer } from "react-navigation";
 import Trash from '../components/trash';
 import Archive from './archive';
@@ -6,11 +14,14 @@ import Reminder from './reminder'
 import DashBoardAppBar from '../components/dashboardWithAppBar'
 import { createDrawerNavigator} from "react-navigation-drawer";
 
-
+//display the navigation menu using createDrawerNavigator
 const drawer = createDrawerNavigator({
     notes:{
         screen:DashBoardAppBar
     },
+    // notes:{
+    //     screen:DashBoard
+    // },
     remainder: {
         screen: Reminder,
     },

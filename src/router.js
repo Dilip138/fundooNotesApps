@@ -17,6 +17,7 @@ import TakeNote from './components/takeNotes';
 import SignOut from './components/signOut';
 import DisplayNotes from './components/displayNotes';
 import DashboardWithAppBar from './components/dashboardWithAppBar';
+import EditNote from './components/editNote';
 const AppNavigator = createStackNavigator({
     //calling the login component
     login: {
@@ -61,6 +62,12 @@ const AppNavigator = createStackNavigator({
             header: null
         }
     },
+    // dashBoard: {
+    //     screen: DashBoard,
+    //     navigationOptions: {
+    //         header: null
+    //     }
+    // },
     //calling the takeNotes component
     takeNotes: {
         screen: TakeNote,
@@ -75,7 +82,13 @@ const AppNavigator = createStackNavigator({
             header: null
         }
     },
-      //calling the signOut component
+    editNote: {
+        screen: EditNote,
+        navigationOptions: {
+            header: null
+        }
+    },
+    //calling the signOut component
     signOut: {
         screen: SignOut,
         navigationOptions: {

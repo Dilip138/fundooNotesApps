@@ -22,6 +22,9 @@ export default class SignUp extends Component {
             password: '',
         }
     }
+    onSignIn = () => {
+        this.props.navigation.navigate('login')
+    }
     onSignUp = () => {
         //check the validation of the firstName,lastName,email and password
         try {
@@ -182,7 +185,12 @@ export default class SignUp extends Component {
                 <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={this.onSignUp}>
                     <Text style={styles.loginText}>SignUp</Text>
                 </TouchableHighlight>
+                <TouchableHighlight style={[styles.buttonContainer, styles.loginButton]} onPress={this.onSignIn}>
+                    <Text style={styles.loginText}>SignIn</Text>
+                </TouchableHighlight>
+
             </View>
+
 
         );
     }

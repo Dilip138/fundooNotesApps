@@ -1,37 +1,16 @@
-/******************************************************************************************
-* @purpose : User Interface -Mobile App design to support multiple resolution for takeNotes component Using React-Native
-* @file : takeNotes.js
-* @module : state,props,,styles,createNotes,DateTimePicker
-* @author : Dilip
-* @version : 1.0
-* @since : 6-Dec-2019
-******************************************************************************************/
 import React, { Component } from 'react';
 import { View, TouchableOpacity, Image, Text, TextInput, Picker } from 'react-native'
 import styles from '../styleSheet';
 import Snackbar from 'react-native-snackbar';
-import { createNotes } from '../controller/controller';
 import Dialog from 'react-native-dialog';
 import DateTimePicker from "react-native-modal-datetime-picker";
 import Menu, { MenuItem } from 'react-native-material-menu';
-
-export default class TakeNote extends Component {
+export default class EditNote extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            description: '',
             title: '',
-            archive: false,
-            pinned: false,
-            trash: false,
-            color: '',
-            isDatePickerVisible: false,
-            dialogVisible: false,
-            reminder: '',
-            PickerValue: '',
-            isTimePickerVisible: false,
-            date: '',
-            time: ''
+            description: ''
         }
     }
     showDialog = () => {
@@ -98,11 +77,6 @@ export default class TakeNote extends Component {
             let data = {
                 title: this.state.title,
                 description: this.state.description,
-                reminder: this.state.reminder,
-                archive: this.state.archive,
-                pinned: this.state.pinned,
-                color: this.state.color,
-                trash: this.state.trash,
             }
             console.warn("res in data", data);
 
@@ -118,19 +92,19 @@ export default class TakeNote extends Component {
                 });
             }
             else {
-                createNotes(data)
-                    .then((res) => {
-                        console.log("res in Notes", res);
-                        this.props.navigation.navigate('drawerScreen')
-                        Snackbar.show({
-                            title: 'Notes is SuccessFull',
-                            duration: Snackbar.LENGTH_SHORT,
-                            action: {
-                                title: 'UNDO',
-                                color: 'green',
-                            },
-                        });
-                    })
+                // createNotes(data)
+                //     .then((res) => {
+                //         console.log("res in Notes", res);
+                //         this.props.navigation.navigate('drawerScreen')
+                //         Snackbar.show({
+                //             title: 'Notes is SuccessFull',
+                //             duration: Snackbar.LENGTH_SHORT,
+                //             action: {
+                //                 title: 'UNDO',
+                //                 color: 'green',
+                //             },
+                //         });
+                //     })
             }
         } catch (error) {
             console.log(error.toString());
@@ -180,10 +154,10 @@ export default class TakeNote extends Component {
                     <Text>{this.state.reminder}</Text>
                 </View>
                 {/* <Menu
-            view={this.state.click}
-            color={this.onChangeColor}
-            trash={this.handleTrash}
-            navigation={this.props.navigation} /> */}
+    view={this.state.click}
+    color={this.onChangeColor}
+    trash={this.handleTrash}
+    navigation={this.props.navigation} /> */}
                 <View style={{ flex: 1 }}></View>
                 <View style={styles.last}>
                     <TouchableOpacity>

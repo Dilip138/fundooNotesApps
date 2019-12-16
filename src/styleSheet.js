@@ -161,7 +161,15 @@ export default StyleSheet.create({
     justifyContent:'space-between',
     elevation:5,
     height:50,
-    backgroundColor: "#fff",
-    
+    backgroundColor: "#fff",    
   },
+  color:{
+    borderColor:'grey'
+  },
+  color1:{
+    borderColor:'black'
+  },
+  bottom:{
+    marginTop:20
+  }
 });

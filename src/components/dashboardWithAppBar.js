@@ -1,3 +1,11 @@
+/******************************************************************************************
+* @purpose : User Interface -Mobile App design to support multiple resolution for DashBoardWithAppBar component Using React-Native
+* @file : dashBoardWithAppBar.js
+* @module : state,props,,styles,navigationOptions
+* @author : Dilip
+* @version : 1.0
+* @since : 2-Dec-2019
+******************************************************************************************/
 import React, { Component } from 'react';
 import { Text, View, Image, TouchableOpacity, TouchableHighlight, } from 'react-native';
 import { Card } from 'react-native-elements';
@@ -6,7 +14,7 @@ import styles from '../styleSheet';
 import { DrawerActions } from 'react-navigation-drawer';
 import { ScrollView } from 'react-native-gesture-handler';
 import { getNotes } from '../controller/controller';
-import Dialog from 'react-native-dialog'
+import Menu, { MenuItem } from 'react-native-material-menu';
 
 class DashBoardWithAppBar extends Component {
     constructor(props) {
@@ -15,6 +23,7 @@ class DashBoardWithAppBar extends Component {
             open: false,
             note: [],
             click: false,
+            color: '',
             count: 0
         }
     }
@@ -40,7 +49,14 @@ class DashBoardWithAppBar extends Component {
         })
     }
 
-    longPressClick = () => {
+    longPressClick(event){
+        const event = event.target.value
+        this.setState({
+            click: !this.state.click,
+            count: (this.state.count) + 1
+        })
+    }
+    onPressClick = () => {
         this.setState({
             click: true,
             count: (this.state.count) + 1
@@ -52,36 +68,81 @@ class DashBoardWithAppBar extends Component {
             count: 0
         })
     }
+    menu = null;
+    setMenuRef = ref => {
+        this.menu = ref;
+    };
+    showMenu = () => {
+        this.menu.show();
+    };
+    // hideMenu = () => {
+    //   this._menu.hide();
+    // };
+    option1Click = () => {
+        this.menu.hide();
+        this.props.option1Click();
+    };
+    option2Click = () => {
+        this.menu.hide();
+        this.props.option2Click();
+    };
     render() {
+        let borderColor = !this.state.click ? (styles.color) : (styles.color1)
         let arr = []
-        let key;
+        let pinArr = []
         arr = this.state.note.map((notes) => {
             console.log("res in map1", notes)
             let take = this.state.open ? (styles.grid) : (styles.list)
-            return (
-                <View style={take}>
-                    <TouchableOpacity onLongPress={this.longPressClick} >
-                        <Card containerStyle={{ borderWidth: 2, borderColor: "black", borderRadius: 10 }}>
-                            <View>
-                                <View style={{ padding: 5 }}>
-                                    <Text>{notes.title}</Text>
+            if (notes.pinned === false) {
+                return (
+                    <View style={take}>
+                        <TouchableOpacity onLongPress={this.longPressClick} onPress={() => this.props.navigation.navigate('editNote')}>
+                            <Card containerStyle={[{ borderRadius: 10 }, borderColor]}>
+                                <View>
+                                    <View style={{ padding: 5 }}>
+                                        <Text>{notes.title}</Text>
+                                    </View>
+                                    <View style={{ padding: 5 }}>
+                                        <Text>{notes.description}</Text>
+                                    </View>
+                                    <View style={{ padding: 5 }}>
+                                        <Text>{notes.reminder}</Text>
+                                    </View>
                                 </View>
-                                <View style={{ padding: 5 }}>
-                                    <Text>{notes.description}</Text>
+                            </Card>
+                        </TouchableOpacity>
+                    </View>
+                )
+            }
+        })
+        pinArr = this.state.note.map((notes) => {
+            console.log("res in map2", notes)
+            let take = this.state.open ? (styles.grid) : (styles.list)
+            if (notes.pinned === true) {
+                return (
+                    <View style={take}>
+                        <TouchableOpacity onLongPress={(event) => this.longPressClick(event)} onPress={this.onPressClick} >
+                            <Card containerStyle={[{ borderRadius: 10 }, borderColor]}>
+                                <View>
+                                    <View style={{ padding: 5 }}>
+                                        <Text>{notes.title}</Text>
+                                    </View>
+                                    <View style={{ padding: 5 }}>
+                                        <Text>{notes.description}</Text>
+                                    </View>
+                                    <View style={{ padding: 5 }}>
+                                        <Text>{notes.reminder}</Text>
+                                    </View>
                                 </View>
-                                <View style={{ padding: 5 }}>
-                                    <Text>{notes.reminder}</Text>
-                                </View>
-                            </View>
-                        </Card>
-                    </TouchableOpacity>
-                </View>
-            )
+                            </Card>
+                        </TouchableOpacity>
+                    </View>
+                )
+            }
         })
         return (
             <View style={styles.header}>
                 <ScrollView>
-
                     {(!this.state.click) ?
                         (<Card containerStyle={{ borderRadius: 10, height: 55, borderWidth: 2 }}>
                             <View style={styles.navBar}>
@@ -137,13 +198,25 @@ class DashBoardWithAppBar extends Component {
                                 </TouchableOpacity>
                             </View>
                             <View style={{ margin: 15 }}>
-                                <TouchableOpacity onPress={this.showDialog}>
-                                    <Image style={styles.image} source={require('../assets/menu1.png')} />
-                                </TouchableOpacity>
+                                <Menu
+                                    ref={this.setMenuRef}
+                                    button={
+                                        <TouchableOpacity onPress={this.showMenu}>
+                                            <Image style={styles.image} source={require('../assets/menu1.png')} />
+                                        </TouchableOpacity>
+                                    }>
+                                    <MenuItem onPress={this.option1Click}>Archive</MenuItem>
+                                    <MenuItem onPress={this.option2Click}>Delete</MenuItem>
+                                </Menu>
                             </View>
                         </View>)}
+                    <View><Text style={{marginLeft:20,fontSize:11}}>OTHERS</Text></View>
                     <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
                         {arr}
+                    </View>
+                    <View><Text style={{marginLeft:20,fontSize:11}}>PINNED</Text></View>
+                    <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+                        {pinArr}
                     </View>
                 </ScrollView>
                 <View style={styles.footer}>

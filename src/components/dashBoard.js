@@ -4,11 +4,10 @@ import { Card } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import styles from '../styleSheet';
 import { DrawerActions } from 'react-navigation-drawer';
-import { withNavigation } from 'react-navigation';
 import { ScrollView } from 'react-native-gesture-handler';
 import DisplayNotes from './displayNotes';
-import Dialog from 'react-native-dialog';
 import { getNotes } from '../controller/controller';
+import Menu, { MenuItem } from 'react-native-material-menu';
 
 class DashBoard extends Component {
     constructor(props) {
@@ -54,7 +53,7 @@ class DashBoard extends Component {
         return (
             <View style={styles.header}>
                 <ScrollView>
-                    {(this.props.view) ?
+                    {!(this.props.view) ?
                         (<Card containerStyle={{ borderRadius: 10, height: 55 }}>
                             <View style={styles.navBar}>
                                 <View style={{ flexDirection: 'row' }}>
@@ -97,28 +96,30 @@ class DashBoard extends Component {
                                 </View>
                             </View>
                         </Card>) :
-                        (
-                            <View style={styles.appBar}>
-                                <View style={{ margin: 15 }}>
-                                    <TouchableOpacity>
-                                        <Image style={styles.image} source={require('../assets/clear.png')} />
-                                    </TouchableOpacity>
-                                </View>
-                                <View style={{ margin: 15 }}>
-                                    <TouchableOpacity onPress={this.showDialog}>
-                                        <Image style={styles.image} source={require('../assets/menu1.png')} />
-                                    </TouchableOpacity>
-                                </View>
-                                <Dialog.Container visible={this.state.dialogVisible}>
-                                    <TouchableOpacity onPress={this.showDialog}>
-                                        <Text>Archive</Text>
-                                    </TouchableOpacity>
-                                    <TouchableOpacity onPress={this.showDialog}>
-                                        <Text>Delete</Text>
-                                    </TouchableOpacity>
-                                </Dialog.Container>
+                        (<View style={styles.appBar}>
+                            <View style={{ margin: 15 }}>
+                                <TouchableOpacity onPress={this.onPressBack}>
+                                    <Image style={styles.image} source={require('../assets/clear.png')} />
+                                </TouchableOpacity>
                             </View>
-                        )}
+                            <View style={{ margin: 15 }}>
+                                <TouchableOpacity>
+                                    <Text>{this.state.count}</Text>
+                                </TouchableOpacity>
+                            </View>
+                            <View style={{ margin: 15 }}>
+                                <Menu
+                                    ref={this.setMenuRef}
+                                    button={
+                                        <TouchableOpacity onPress={this.showMenu}>
+                                            <Image style={styles.image} source={require('../assets/menu1.png')} />
+                                        </TouchableOpacity>
+                                    }>
+                                    <MenuItem onPress={this.option1Click}>Archive</MenuItem>
+                                    <MenuItem onPress={this.option2Click}>Delete</MenuItem>
+                                </Menu>
+                            </View>
+                        </View>)}
                     <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
                         {arr}
                     </View>

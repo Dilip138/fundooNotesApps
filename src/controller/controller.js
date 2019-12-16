@@ -66,10 +66,17 @@ export async function userForgot(user) {
  * @param {createNotes title, description and reminder for authentication} noteData 
  */
 export async function createNotes(noteData) {
+    if(noteData.title === ''){
+        alert('Empty note discarded')
+    }
     let data = {
         title: noteData.title,
         description: noteData.description,
-        reminder:noteData.reminder,
+        reminder: noteData.reminder,
+        archive: noteData.archive,
+        pinned: noteData.pinned,
+        color: noteData.color,
+        trash: noteData.trash,
         currentUser: firebaseData.auth().currentUser.email
     }
     try {

@@ -20,19 +20,11 @@ export default class Reminder extends Component {
   };
   render() {
     return (
-      <View>
-        <TouchableOpacity onPress={this.showDialog}>
-          <Text>Show Dialog</Text>
-        </TouchableOpacity>
-        <Dialog.Container visible={this.state.dialogVisible}>
-          <Dialog.Title>Account delete</Dialog.Title>
-          <Dialog.Description>
-            Do you want to delete this account? You cannot undo this action.
-                </Dialog.Description>
-          <Dialog.Button label="Cancel" onPress={this.handleCancel} />
-          <Dialog.Button label="Delete" onPress={this.handleDelete} />
-        </Dialog.Container>
-      </View>
+      <View style={{padding:10}} >
+      <Text>
+      Remainder
+      </Text>
+    </View>
     );
   }
 }
