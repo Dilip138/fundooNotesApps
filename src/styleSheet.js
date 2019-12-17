@@ -164,10 +164,12 @@ export default StyleSheet.create({
     backgroundColor: "#fff",    
   },
   color:{
-    borderColor:'grey'
+    borderColor:'grey',
+    borderRadius:10
   },
   color1:{
-    borderColor:'black'
+    borderColor:'black',
+    borderRadius:10
   },
   bottom:{
     marginTop:20

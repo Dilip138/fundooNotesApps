@@ -66,9 +66,6 @@ export async function userForgot(user) {
  * @param {createNotes title, description and reminder for authentication} noteData 
  */
 export async function createNotes(noteData) {
-    if(noteData.title === ''){
-        alert('Empty note discarded')
-    }
     let data = {
         title: noteData.title,
         description: noteData.description,
@@ -98,11 +95,60 @@ export async function getNotes() {
     await db.collection('notes').get().then((value) => {
         value.forEach((noteData) => {
             //console.warn("notedata in controller", noteData.data())
-            note.push(noteData.data())
+            note.push(noteData)
         })
     })
     // console.warn("res in note", note)
     return note;
+}
+/**
+ * 
+ * @param {editNotes for user authentication} editData 
+ */
+export async function editNotes(editData) {
+    console.warn("res in editData", editData);
+    try {
+        let data = {
+            title: editData.title,
+            description: editData.description
+        }
+        let res = await db.collection('notes').doc(editData.key).update(data)
+        console.warn("res in edit", res)
+    }
+    catch (error) {
+        console.log(error.toString());
+    }
+}
+export async function archiveNotes(archiveData) {
+    try {
+        console.warn("res in archive", archiveData);
+        if (archiveData.archive == false) {
+            archiveData.archive = true
+        }
+        else {
+            archiveData.archive = false
+        }
+        await db.collection('notes').doc(archiveData.key).delete()
+    }
+    catch (error) {
+        console.log(error.toString());
+    }
+}
+export async function trashNotes(trashData) {
+    try {
+        console.warn("res in archive", archiveData);
+        if (trashData.trash == false) {
+            trashData.trash = true
+            trashData.archive = false
+        }
+        else {
+            trashData.trash = false
+        }
+        await db.collection('notes').doc(trashData.key).update(trashData)
+    }
+    catch (error) {
+        console.log(error.toString());
+    }
 }
 //check logOut for user authentication
 export async function userSignOut() {

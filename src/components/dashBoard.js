@@ -47,6 +47,8 @@ class DashBoard extends Component {
                 <DisplayNotes display={notes}
                     notekey={key}
                     view={this.state.open}
+                    navigation={this.props.navigation}
+
                 />
             )
         })

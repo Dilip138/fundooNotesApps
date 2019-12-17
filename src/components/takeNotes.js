@@ -51,6 +51,9 @@ export default class TakeNote extends Component {
             });
         };
     };
+    getArchive() {
+        this.props.navigation.navigate('archive')
+    }
     showDatePicker = () => {
         this.setState({ isDatePickerVisible: true });
     };

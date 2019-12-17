@@ -24,7 +24,7 @@ class DashBoardWithAppBar extends Component {
             note: [],
             click: false,
             color: '',
-            count: 0
+            count: 0,
         }
     }
     static navigationOptions = {
@@ -49,8 +49,7 @@ class DashBoardWithAppBar extends Component {
         })
     }
 
-    longPressClick(event){
-        const event = event.target.value
+    longPressClick = () => {
         this.setState({
             click: !this.state.click,
             count: (this.state.count) + 1
@@ -89,24 +88,23 @@ class DashBoardWithAppBar extends Component {
     render() {
         let borderColor = !this.state.click ? (styles.color) : (styles.color1)
         let arr = []
-        let pinArr = []
         arr = this.state.note.map((notes) => {
-            console.log("res in map1", notes)
+            //console.warn("res in map1", notes)
             let take = this.state.open ? (styles.grid) : (styles.list)
-            if (notes.pinned === false) {
+            if (notes.data().pinned === false) {
                 return (
                     <View style={take}>
-                        <TouchableOpacity onLongPress={this.longPressClick} onPress={() => this.props.navigation.navigate('editNote')}>
-                            <Card containerStyle={[{ borderRadius: 10 }, borderColor]}>
+                        <TouchableOpacity onLongPress={this.longPressClick} onPress={() => this.props.navigation.navigate('editNote', { display: notes.data(), key: notes.id })}>
+                            <Card containerStyle={borderColor}>
                                 <View>
                                     <View style={{ padding: 5 }}>
-                                        <Text>{notes.title}</Text>
+                                        <Text>{notes.data().title}</Text>
                                     </View>
                                     <View style={{ padding: 5 }}>
-                                        <Text>{notes.description}</Text>
+                                        <Text>{notes.data().description}</Text>
                                     </View>
                                     <View style={{ padding: 5 }}>
-                                        <Text>{notes.reminder}</Text>
+                                        <Text>{notes.data().reminder}</Text>
                                     </View>
                                 </View>
                             </Card>
@@ -115,23 +113,24 @@ class DashBoardWithAppBar extends Component {
                 )
             }
         })
+        let pinArr = []
         pinArr = this.state.note.map((notes) => {
-            console.log("res in map2", notes)
+            //console.log("res in map2", notes)
             let take = this.state.open ? (styles.grid) : (styles.list)
-            if (notes.pinned === true) {
+            if (notes.data().pinned === true) {
                 return (
                     <View style={take}>
-                        <TouchableOpacity onLongPress={(event) => this.longPressClick(event)} onPress={this.onPressClick} >
-                            <Card containerStyle={[{ borderRadius: 10 }, borderColor]}>
+                        <TouchableOpacity onLongPress={(event) => this.longPressClick(event)} onPress={() => this.props.navigation.navigate('editNote', { display: notes.data(), key: notes.id })} >
+                            <Card containerStyle={borderColor}>
                                 <View>
                                     <View style={{ padding: 5 }}>
-                                        <Text>{notes.title}</Text>
+                                        <Text>{notes.data().title}</Text>
                                     </View>
                                     <View style={{ padding: 5 }}>
-                                        <Text>{notes.description}</Text>
+                                        <Text>{notes.data().description}</Text>
                                     </View>
                                     <View style={{ padding: 5 }}>
-                                        <Text>{notes.reminder}</Text>
+                                        <Text>{notes.data().reminder}</Text>
                                     </View>
                                 </View>
                             </Card>
@@ -141,13 +140,14 @@ class DashBoardWithAppBar extends Component {
             }
         })
         return (
-            <View style={styles.header}>
+            <View style={styles.header}  >
                 <ScrollView>
                     {(!this.state.click) ?
                         (<Card containerStyle={{ borderRadius: 10, height: 55, borderWidth: 2 }}>
                             <View style={styles.navBar}>
                                 <View style={{ flexDirection: 'row' }}>
                                     <View>
+                                        {/* onpress with drawericon */}
                                         <TouchableOpacity
                                             onPress={() =>
                                                 this.props.navigation.dispatch(DrawerActions.openDrawer())}>
@@ -210,11 +210,11 @@ class DashBoardWithAppBar extends Component {
                                 </Menu>
                             </View>
                         </View>)}
-                    <View><Text style={{marginLeft:20,fontSize:11}}>OTHERS</Text></View>
+                    <View><Text style={{ marginLeft: 20, fontSize: 11 }}>OTHERS</Text></View>
                     <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
                         {arr}
                     </View>
-                    <View><Text style={{marginLeft:20,fontSize:11}}>PINNED</Text></View>
+                    <View><Text style={{ marginLeft: 20, fontSize: 11 }}>PINNED</Text></View>
                     <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
                         {pinArr}
                     </View>

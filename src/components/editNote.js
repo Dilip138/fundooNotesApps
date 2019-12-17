@@ -5,13 +5,26 @@ import Snackbar from 'react-native-snackbar';
 import Dialog from 'react-native-dialog';
 import DateTimePicker from "react-native-modal-datetime-picker";
 import Menu, { MenuItem } from 'react-native-material-menu';
+import { editNotes, archiveNotes } from '../controller/controller';
 export default class EditNote extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            title: '',
-            description: ''
+            title: this.props.navigation.state.params.display.title,
+            description: this.props.navigation.state.params.display.description,
+            archive: false,
         }
+    }
+    getArchive() {
+        this.setState({
+            archive: !this.state.archive
+        })
+        let data = {
+            archive: this.state.archive,
+            key: this.props.navigation.state.params.key
+        }
+        archiveNotes(data)
+        this.props.navigation.navigate('drawerScreen')
     }
     showDialog = () => {
         this.setState({ dialogVisible: true });
@@ -77,35 +90,24 @@ export default class EditNote extends Component {
             let data = {
                 title: this.state.title,
                 description: this.state.description,
+                key: this.props.navigation.state.params.key
             }
-            console.warn("res in data", data);
+            console.warn("key", data.key);
 
-            if (data.title == '' && data.description == '') {
-                this.props.navigation.navigate('drawerScreen')
-                Snackbar.show({
-                    title: 'Empty note Discarded',
-                    duration: Snackbar.LENGTH_SHORT,
-                    action: {
-                        title: '',
-                        color: 'red',
-                    },
-                });
-            }
-            else {
-                // createNotes(data)
-                //     .then((res) => {
-                //         console.log("res in Notes", res);
-                //         this.props.navigation.navigate('drawerScreen')
-                //         Snackbar.show({
-                //             title: 'Notes is SuccessFull',
-                //             duration: Snackbar.LENGTH_SHORT,
-                //             action: {
-                //                 title: 'UNDO',
-                //                 color: 'green',
-                //             },
-                //         });
-                //     })
-            }
+            console.warn("res in Editdata", data);
+            editNotes(data)
+                .then((res) => {
+                    console.log("res in Notes", res);
+                    this.props.navigation.navigate('drawerScreen')
+                    Snackbar.show({
+                        title: 'EditNotes is SuccessFull',
+                        duration: Snackbar.LENGTH_SHORT,
+                        action: {
+                            title: 'UNDO',
+                            color: 'green',
+                        },
+                    });
+                })
         } catch (error) {
             console.log(error.toString());
         }
@@ -170,7 +172,7 @@ export default class EditNote extends Component {
                                 <Image style={styles.image2} source={require('../assets/menu1.png')}></Image>
                             </TouchableOpacity>
                         }>
-                        <MenuItem onPress={this.option2Click}>Delete</MenuItem>
+                        <MenuItem onPress={(event) => this.getArchive(event)}>Delete</MenuItem>
                         <MenuItem onPress={this.option2Click}>color</MenuItem>
                     </Menu>
                     <Dialog.Container visible={this.state.dialogVisible}>

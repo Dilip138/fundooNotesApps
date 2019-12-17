@@ -16,6 +16,9 @@ export default class DisplayNotes extends Component {
       click: !(this.state.click)
     })
   }
+  EditNote = () => {
+    this.props.navigation.navigate('editNote')
+  }
   render() {
     if ((this.state.click) == true) {
       return (
@@ -26,7 +29,7 @@ export default class DisplayNotes extends Component {
     // console.warn("display",this.props.display)
     return (
       <View style={take}>
-        <TouchableOpacity onLongPress={this.longPressClick} >
+        <TouchableOpacity onLongPress={this.longPressClick} onPress={this.EditNote} >
           <Card containerStyle={{ borderRadius: 10 }}>
             <View>
               <View style={{ padding: 5 }}>
