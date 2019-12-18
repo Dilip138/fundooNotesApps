@@ -9,7 +9,7 @@
 import firebaseData from "../configure/firebaseConfig";
 import EventEmitter from 'react-native-eventemitter'
 let db = firebaseData.firestore();
-/**
+/**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
  * 
  * @param {create emailId and password for authentication} user 
  */
@@ -110,7 +110,8 @@ export async function editNotes(editData) {
     try {
         let data = {
             title: editData.title,
-            description: editData.description
+            description: editData.description,
+            reminder:editData.reminder
         }
         let res = await db.collection('notes').doc(editData.key).update(data)
         console.warn("res in edit", res)
@@ -128,7 +129,7 @@ export async function archiveNotes(archiveData) {
         else {
             archiveData.archive = false
         }
-        await db.collection('notes').doc(archiveData.key).delete()
+        await db.collection('notes').doc(archiveData.key).update(archiveData)
     }
     catch (error) {
         console.log(error.toString());
@@ -136,7 +137,7 @@ export async function archiveNotes(archiveData) {
 }
 export async function trashNotes(trashData) {
     try {
-        console.warn("res in archive", archiveData);
+        console.warn("res in trash", trashData);
         if (trashData.trash == false) {
             trashData.trash = true
             trashData.archive = false

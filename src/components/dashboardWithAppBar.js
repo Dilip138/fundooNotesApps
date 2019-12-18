@@ -205,8 +205,12 @@ class DashBoardWithAppBar extends Component {
                                             <Image style={styles.image} source={require('../assets/menu1.png')} />
                                         </TouchableOpacity>
                                     }>
-                                    <MenuItem onPress={this.option1Click}>Archive</MenuItem>
-                                    <MenuItem onPress={this.option2Click}>Delete</MenuItem>
+                                    <View style={{ width: 180 }}>
+                                        <MenuItem onPress={this.option1Click}>Archive</MenuItem>
+                                        <MenuItem onPress={this.option2Click}>Delete</MenuItem>
+                                        <MenuItem>Make a copy</MenuItem>
+                                        <MenuItem>Send</MenuItem>
+                                    </View>
                                 </Menu>
                             </View>
                         </View>)}

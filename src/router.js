@@ -18,6 +18,7 @@ import SignOut from './components/signOut';
 import DisplayNotes from './components/displayNotes';
 import DashboardWithAppBar from './components/dashboardWithAppBar';
 import EditNote from './components/editNote';
+import Menu from './components/menu';
 const AppNavigator = createStackNavigator({
     //calling the login component
     login: {
@@ -84,6 +85,12 @@ const AppNavigator = createStackNavigator({
     },
     editNote: {
         screen: EditNote,
+        navigationOptions: {
+            header: null
+        }
+    },
+    menu: {
+        screen: Menu,
         navigationOptions: {
             header: null
         }

@@ -7,14 +7,14 @@
 * @since : 6-Dec-2019
 ******************************************************************************************/
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Image, Text, TextInput, Picker } from 'react-native'
+import { View, TouchableOpacity, Image, Text, TextInput, Picker } from 'react-native';
 import styles from '../styleSheet';
 import Snackbar from 'react-native-snackbar';
 import { createNotes } from '../controller/controller';
 import Dialog from 'react-native-dialog';
 import DateTimePicker from "react-native-modal-datetime-picker";
-import Menu, { MenuItem } from 'react-native-material-menu';
-
+import RBSheet from "react-native-raw-bottom-sheet";
+import Menu from '../components/menu';
 export default class TakeNote extends Component {
     constructor(props) {
         super(props)
@@ -182,26 +182,33 @@ export default class TakeNote extends Component {
                         value={this.state.description} />
                     <Text>{this.state.reminder}</Text>
                 </View>
-                {/* <Menu
-            view={this.state.click}
-            color={this.onChangeColor}
-            trash={this.handleTrash}
-            navigation={this.props.navigation} /> */}
                 <View style={{ flex: 1 }}></View>
                 <View style={styles.last}>
                     <TouchableOpacity>
                         <Image style={styles.image2} source={require('../assets/plus1.png')}></Image>
                     </TouchableOpacity>
-                    <Menu
-                        ref={this.setMenuRef}
-                        button={
-                            <TouchableOpacity onPress={this.showMenu}>
-                                <Image style={styles.image2} source={require('../assets/menu1.png')}></Image>
-                            </TouchableOpacity>
-                        }>
-                        <MenuItem onPress={this.option2Click}>Delete</MenuItem>
-                        <MenuItem onPress={this.option2Click}>color</MenuItem>
-                    </Menu>
+                    <TouchableOpacity onPress={() => this.RBSheet.open()}>
+                        <RBSheet
+                            ref={ref => {
+                                this.RBSheet = ref;
+                            }}
+                            height={200}
+                            duration={250}
+                            customStyles={{
+                                container: {
+                                    flexDirection: 'column',
+                                    justifyContent: 'flex-start'
+                                }
+                            }}>
+                            <Menu
+                                view={this.state.click}
+                                color={this.onChangeColor}
+                                trash={this.handleTrash}
+                                navigation={this.props.navigation}
+                            />
+                        </RBSheet>
+                        <Image style={styles.image2} source={require('../assets/menu1.png')}></Image>
+                    </TouchableOpacity>
                     <Dialog.Container visible={this.state.dialogVisible}>
                         <Dialog.Title> Add reminder</Dialog.Title>
                         <View>

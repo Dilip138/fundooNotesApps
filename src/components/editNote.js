@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import { View, TouchableOpacity, Image, Text, TextInput, Picker } from 'react-native'
+import { View, TouchableOpacity, Image, Text, TextInput, Picker, } from 'react-native'
 import styles from '../styleSheet';
 import Snackbar from 'react-native-snackbar';
 import Dialog from 'react-native-dialog';
+import RBSheet from "react-native-raw-bottom-sheet";
+import Menu from '../components/menu';
 import DateTimePicker from "react-native-modal-datetime-picker";
-import Menu, { MenuItem } from 'react-native-material-menu';
 import { editNotes, archiveNotes } from '../controller/controller';
 export default class EditNote extends Component {
     constructor(props) {
@@ -12,8 +13,17 @@ export default class EditNote extends Component {
         this.state = {
             title: this.props.navigation.state.params.display.title,
             description: this.props.navigation.state.params.display.description,
+            reminder:this.props.navigation.state.params.display.reminder,
             archive: false,
+            click: false,
+            color: '',
+            trash: false,
         }
+    }
+    handleTrash = () =>{
+        this.setState({
+           trash:!this.state.trash 
+        })
     }
     getArchive() {
         this.setState({
@@ -90,6 +100,7 @@ export default class EditNote extends Component {
             let data = {
                 title: this.state.title,
                 description: this.state.description,
+                reminder:this.state.reminder,
                 key: this.props.navigation.state.params.key
             }
             console.warn("key", data.key);
@@ -155,26 +166,34 @@ export default class EditNote extends Component {
                         value={this.state.description} />
                     <Text>{this.state.reminder}</Text>
                 </View>
-                {/* <Menu
-    view={this.state.click}
-    color={this.onChangeColor}
-    trash={this.handleTrash}
-    navigation={this.props.navigation} /> */}
                 <View style={{ flex: 1 }}></View>
                 <View style={styles.last}>
                     <TouchableOpacity>
                         <Image style={styles.image2} source={require('../assets/plus1.png')}></Image>
                     </TouchableOpacity>
-                    <Menu
-                        ref={this.setMenuRef}
-                        button={
-                            <TouchableOpacity onPress={this.showMenu}>
-                                <Image style={styles.image2} source={require('../assets/menu1.png')}></Image>
-                            </TouchableOpacity>
-                        }>
-                        <MenuItem onPress={(event) => this.getArchive(event)}>Delete</MenuItem>
-                        <MenuItem onPress={this.option2Click}>color</MenuItem>
-                    </Menu>
+                    <TouchableOpacity onPress={() => this.RBSheet.open()}>
+                        <RBSheet
+                            ref={ref => {
+                                this.RBSheet = ref;
+                            }}
+                            height={200}
+                            duration={250}
+                            customStyles={{
+                                container: {
+                                    flexDirection: 'column',
+                                    justifyContent: 'flex-start'
+                                }
+                            }}>
+                            <Menu
+                            view={this.state.click}
+                            color={this.onChangeColor}
+                            trash={this.handleTrash}
+                            navigation={this.props.navigation}
+                            />
+                        </RBSheet>
+                        <Image style={styles.image2} source={require('../assets/menu1.png')}></Image>
+                    </TouchableOpacity>
+
                     <Dialog.Container visible={this.state.dialogVisible}>
                         <Dialog.Title> Add reminder</Dialog.Title>
                         <View>
@@ -215,7 +234,7 @@ export default class EditNote extends Component {
                         <Dialog.Button label="save" onPress={this.handleSave} />
                     </Dialog.Container>
                 </View>
-            </View>
+            </View >
         );
     }
 }

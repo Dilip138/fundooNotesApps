@@ -173,5 +173,9 @@ export default StyleSheet.create({
   },
   bottom:{
     marginTop:20
-  }
+  },
+  // noteColor:{
+  //   backgroundColor: item.colorCode, 
+  //   marginLeft: 5, borderRadius: 25, height: 40, width: 40, borderColor: 'black',
+  // }
 });
