@@ -14,6 +14,7 @@ import { createNotes } from '../controller/controller';
 import Dialog from 'react-native-dialog';
 import DateTimePicker from "react-native-modal-datetime-picker";
 import RBSheet from "react-native-raw-bottom-sheet";
+import { trashNotes } from '../controller/controller';
 import Menu from '../components/menu';
 export default class TakeNote extends Component {
     constructor(props) {
@@ -33,6 +34,24 @@ export default class TakeNote extends Component {
             date: '',
             time: ''
         }
+        this.onChangeColor = this.onChangeColor.bind(this)
+    }
+    onChangeColor = (color) => {
+        this.setState({
+            color: color
+        })
+        //console.warn("color",color)
+    }
+    handleTrash = () => {
+        this.setState({
+            trash: !this.state.trash
+        })
+        let data = {
+            trash: this.state.trash,
+        }
+        trashNotes(data)
+        this.props.navigation.navigate('drawerScreen')
+
     }
     showDialog = () => {
         this.setState({ dialogVisible: true });
@@ -141,7 +160,7 @@ export default class TakeNote extends Component {
     }
     render() {
         return (
-            <View style={{ flex: 1 }}>
+            <View style={{ flex: 1, backgroundColor: this.state.color}}>
                 <View style={styles.data1}>
                     <View>
                         <TouchableOpacity onPress={() => { this.onSubmit() }}>
@@ -200,10 +219,13 @@ export default class TakeNote extends Component {
                                     justifyContent: 'flex-start'
                                 }
                             }}>
+                            <View style={{ margin: 30 }}>
+                                <TouchableOpacity onPress={this.handleTrash}>
+                                    <Text> Delete </Text>
+                                </TouchableOpacity>
+                            </View>
                             <Menu
-                                view={this.state.click}
                                 color={this.onChangeColor}
-                                trash={this.handleTrash}
                                 navigation={this.props.navigation}
                             />
                         </RBSheet>

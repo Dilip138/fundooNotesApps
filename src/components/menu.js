@@ -56,42 +56,29 @@ export default class Menu extends Component {
         super(props)
         this.state = {
             color: '',
-            trash: false,
         }
-        //  this.handlecolor = this.handlecolor.bind(this)
-        //  this.handleTrash=this.handleTrash.bind(this)
+        this.handleColor = this.handleColor.bind(this)
+    }
+    handleColor(color){
+        this.setState({
+            color:color
+        })
+        this.props.color(this.state.color)
+    }
+    renderItem = ({ item }) => {
+        return (
+            <TouchableOpacity onPress={() => this.handleColor(item.colorCode)}>
+                <View style={{ backgroundColor: item.colorCode, marginLeft: 5, borderRadius: 25, borderColor: 'black', height: 40, width: 40 }}>
+                </View>
+            </TouchableOpacity>
+        )
     }
     render() {
-        Item = ({ colorCode }) => {
-            return (
-                <View>
-                    <Text>
-                        {colorCode}
-                    </Text>
-                </View>
-            )
-        }
         return (
-            <View >
-                <View style={{ margin: 30 }}>
-                    <TouchableOpacity >
-                        {/* <View style={{paddingTop:20}}>
-                            <Image style={{ width: 20 }} source={require('../assets/delete.png')} />
-                        </View> */}
-                        <Text> Delete </Text>
-                    </TouchableOpacity>
-                </View>
-                <View>
+            <View >              
                     <FlatList horizontal={true}
                         data={colorPattern}
-                        renderItem={({ item }) =>
-                            <TouchableOpacity onPress={() => this.handlecolor(item.colorCode)}>
-                                <View style={{ backgroundColor: item.colorCode, marginLeft: 5, borderRadius: 25, height: 40, width: 40, borderColor: 'black', borderWidth: styles.hairlineWidth }}>
-                                </View>
-                            </TouchableOpacity>}>
-                    </FlatList>
-
-                </View>
+                        renderItem={this.renderItem} />
             </View>
         );
     }

@@ -6,24 +6,31 @@ import Dialog from 'react-native-dialog';
 import RBSheet from "react-native-raw-bottom-sheet";
 import Menu from '../components/menu';
 import DateTimePicker from "react-native-modal-datetime-picker";
-import { editNotes, archiveNotes } from '../controller/controller';
+import { editNotes, archiveNotes, trashNotes } from '../controller/controller';
 export default class EditNote extends Component {
     constructor(props) {
         super(props)
         this.state = {
             title: this.props.navigation.state.params.display.title,
             description: this.props.navigation.state.params.display.description,
-            reminder:this.props.navigation.state.params.display.reminder,
+            reminder: this.props.navigation.state.params.display.reminder,
             archive: false,
             click: false,
             color: '',
             trash: false,
         }
     }
-    handleTrash = () =>{
+    handleTrash = () => {
         this.setState({
-           trash:!this.state.trash 
+            trash: !this.state.trash
         })
+        let data = {
+            trash: this.state.trash,
+            key: this.props.navigation.state.params.key
+        }
+        trashNotes(data)
+        this.props.navigation.navigate('drawerScreen')
+
     }
     getArchive() {
         this.setState({
@@ -100,12 +107,11 @@ export default class EditNote extends Component {
             let data = {
                 title: this.state.title,
                 description: this.state.description,
-                reminder:this.state.reminder,
+                reminder: this.state.reminder,
                 key: this.props.navigation.state.params.key
             }
             console.warn("key", data.key);
-
-            console.warn("res in Editdata", data);
+            //console.warn("res in Editdata", data);
             editNotes(data)
                 .then((res) => {
                     console.log("res in Notes", res);
@@ -184,11 +190,16 @@ export default class EditNote extends Component {
                                     justifyContent: 'flex-start'
                                 }
                             }}>
+                            <View style={{ margin: 30 }}>
+                                <TouchableOpacity onPress={this.handleTrash}>
+                                    {/* <View style={{paddingTop:20}}>
+                            <Image style={{ width: 20 }} source={require('../assets/delete.png')} />
+                        </View> */}
+                                    <Text> Delete </Text>
+                                </TouchableOpacity>
+                            </View>
                             <Menu
-                            view={this.state.click}
-                            color={this.onChangeColor}
-                            trash={this.handleTrash}
-                            navigation={this.props.navigation}
+                                color={this.onChangeColor}
                             />
                         </RBSheet>
                         <Image style={styles.image2} source={require('../assets/menu1.png')}></Image>

@@ -164,18 +164,14 @@ export default StyleSheet.create({
     backgroundColor: "#fff",    
   },
   color:{
-    borderColor:'grey',
-    borderRadius:10
+    borderRadius:10,
+    borderColor:'grey',   
   },
   color1:{
-    borderColor:'black',
-    borderRadius:10
+    borderRadius:10,
+    borderColor:'black',   
   },
   bottom:{
     marginTop:20
   },
-  // noteColor:{
-  //   backgroundColor: item.colorCode, 
-  //   marginLeft: 5, borderRadius: 25, height: 40, width: 40, borderColor: 'black',
-  // }
 });

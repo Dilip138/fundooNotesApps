@@ -19,6 +19,7 @@ import DisplayNotes from './components/displayNotes';
 import DashboardWithAppBar from './components/dashboardWithAppBar';
 import EditNote from './components/editNote';
 import Menu from './components/menu';
+import DeleteNotes from './components/deleteNotes';
 const AppNavigator = createStackNavigator({
     //calling the login component
     login: {
@@ -85,6 +86,12 @@ const AppNavigator = createStackNavigator({
     },
     editNote: {
         screen: EditNote,
+        navigationOptions: {
+            header: null
+        }
+    },
+    deleteNotes: {
+        screen: DeleteNotes,
         navigationOptions: {
             header: null
         }

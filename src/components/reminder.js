@@ -40,7 +40,7 @@ export default class Reminder extends Component {
     arr = this.state.note.map((notes) => {
       let notes1 = notes.data();
       let take = this.state.open ? (styles.grid) : (styles.list)
-      if (notes1.reminder !== '') {
+      if (notes1.reminder !== '' && notes1.trash !== true) {
         return (
           <View style={take}>
             <TouchableOpacity onLongPress={this.longPressClick} onPress={() => this.props.navigation.navigate('editNote', { display: notes1, key: notes.id })}>

@@ -106,12 +106,12 @@ export async function getNotes() {
  * @param {editNotes for user authentication} editData 
  */
 export async function editNotes(editData) {
-    console.warn("res in editData", editData);
+    //console.warn("res in editData", editData);
     try {
         let data = {
             title: editData.title,
             description: editData.description,
-            reminder:editData.reminder
+            reminder: editData.reminder
         }
         let res = await db.collection('notes').doc(editData.key).update(data)
         console.warn("res in edit", res)
@@ -120,9 +120,13 @@ export async function editNotes(editData) {
         console.log(error.toString());
     }
 }
+/**
+ * 
+ * @param {archiveNotes for user authentication} archiveData 
+ */
 export async function archiveNotes(archiveData) {
     try {
-        console.warn("res in archive", archiveData);
+        //console.warn("res in archive", archiveData);
         if (archiveData.archive == false) {
             archiveData.archive = true
         }
@@ -135,12 +139,31 @@ export async function archiveNotes(archiveData) {
         console.log(error.toString());
     }
 }
+/**
+ * 
+ * @param {deleteNotes for user authentication} deleteData 
+ */
+export async function deleteNotes(deleteData) {
+    try {    
+        //console.warn("res in deleteNotes",deleteData);        
+        let res = await db.collection('notes').doc(deleteData.key).delete()
+        console.warn("deleteData successfull", res)
+    }
+    catch (error) {
+        console.log(error.toString());
+    }
+}
+/**
+ * 
+ * @param {trashNotes for user authentication} trashData 
+ */
 export async function trashNotes(trashData) {
     try {
-        console.warn("res in trash", trashData);
+        //console.warn("res in trash", trashData);
         if (trashData.trash == false) {
             trashData.trash = true
             trashData.archive = false
+            trashData.reminder = false
         }
         else {
             trashData.trash = false

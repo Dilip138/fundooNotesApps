@@ -36,6 +36,19 @@ class DashBoardWithAppBar extends Component {
             />
         ),
     };
+    menu = null;
+ 
+  setMenuRef = ref => {
+    this.menu = ref;
+  };
+ 
+//   hideMenu = () => {
+//     this.menu.hide();
+//   };
+ 
+  showMenu = () => {
+    this.menu.show();
+  };
     componentDidMount() {
         getNotes().then((res) => {
             this.setState({
@@ -67,16 +80,6 @@ class DashBoardWithAppBar extends Component {
             count: 0
         })
     }
-    menu = null;
-    setMenuRef = ref => {
-        this.menu = ref;
-    };
-    showMenu = () => {
-        this.menu.show();
-    };
-    // hideMenu = () => {
-    //   this._menu.hide();
-    // };
     option1Click = () => {
         this.menu.hide();
         this.props.option1Click();
@@ -90,21 +93,22 @@ class DashBoardWithAppBar extends Component {
         let arr = []
         arr = this.state.note.map((notes) => {
             //console.warn("res in map1", notes)
+            let notes1 = notes.data();
             let take = this.state.open ? (styles.grid) : (styles.list)
-            if (notes.data().pinned === false) {
+            if (notes1.pinned === false && notes1.trash !== true && notes1.archive !== true) {
                 return (
                     <View style={take}>
-                        <TouchableOpacity onLongPress={this.longPressClick} onPress={() => this.props.navigation.navigate('editNote', { display: notes.data(), key: notes.id })}>
-                            <Card containerStyle={borderColor}>
+                        <TouchableOpacity onLongPress={this.longPressClick} onPress={() => this.props.navigation.navigate('editNote', { display: notes1, key: notes.id })}>
+                            <Card containerStyle={[{backgroundColor:notes1.color},borderColor]}>
                                 <View>
                                     <View style={{ padding: 5 }}>
-                                        <Text>{notes.data().title}</Text>
+                                        <Text>{notes1.title}</Text>
                                     </View>
                                     <View style={{ padding: 5 }}>
-                                        <Text>{notes.data().description}</Text>
+                                        <Text>{notes1.description}</Text>
                                     </View>
                                     <View style={{ padding: 5 }}>
-                                        <Text>{notes.data().reminder}</Text>
+                                        <Text>{notes1.reminder}</Text>
                                     </View>
                                 </View>
                             </Card>
@@ -116,21 +120,22 @@ class DashBoardWithAppBar extends Component {
         let pinArr = []
         pinArr = this.state.note.map((notes) => {
             //console.log("res in map2", notes)
+            let notes1 = notes.data();
             let take = this.state.open ? (styles.grid) : (styles.list)
-            if (notes.data().pinned === true) {
+            if (notes1.pinned === true && notes1.trash !== true && notes1.archive !== true) {
                 return (
                     <View style={take}>
-                        <TouchableOpacity onLongPress={(event) => this.longPressClick(event)} onPress={() => this.props.navigation.navigate('editNote', { display: notes.data(), key: notes.id })} >
-                            <Card containerStyle={borderColor}>
+                        <TouchableOpacity onLongPress={(event) => this.longPressClick(event)} onPress={() => this.props.navigation.navigate('editNote', { display: notes1, key: notes.id })} >
+                            <Card containerStyle={[{backgroundColor:notes1.color},borderColor]}>
                                 <View>
                                     <View style={{ padding: 5 }}>
-                                        <Text>{notes.data().title}</Text>
+                                        <Text>{notes1.title}</Text>
                                     </View>
                                     <View style={{ padding: 5 }}>
-                                        <Text>{notes.data().description}</Text>
+                                        <Text>{notes1.description}</Text>
                                     </View>
                                     <View style={{ padding: 5 }}>
-                                        <Text>{notes.data().reminder}</Text>
+                                        <Text>{notes1.reminder}</Text>
                                     </View>
                                 </View>
                             </Card>
@@ -242,7 +247,7 @@ class DashBoardWithAppBar extends Component {
                         <TouchableHighlight style={styles.imageIcon}
                             onPress={() => { this.props.navigation.navigate('takeNotes') }}>
                             <Image source={require('../assets/plus2.jpg')}
-                                style={styles.image1} />
+                                style={[styles.image1,{borderRadius:50}]} />
                         </TouchableHighlight>
                     </View>
                 </View>
