@@ -6,7 +6,7 @@ import Dialog from 'react-native-dialog';
 import RBSheet from "react-native-raw-bottom-sheet";
 import Menu from '../components/menu';
 import DateTimePicker from "react-native-modal-datetime-picker";
-import { editNotes, archiveNotes, trashNotes } from '../controller/controller';
+import { editNotes, archiveNotes, trashNotes, updateColor } from '../controller/controller';
 export default class EditNote extends Component {
     constructor(props) {
         super(props)
@@ -16,9 +16,21 @@ export default class EditNote extends Component {
             reminder: this.props.navigation.state.params.display.reminder,
             archive: false,
             click: false,
-            color: '',
+            color: this.props.navigation.state.params.display.color,
             trash: false,
         }
+        this.onChangeColor = this.onChangeColor.bind(this)
+    }
+  async onChangeColor(color) {
+      await this.setState({
+            color: color
+        })
+        let data = {
+            color: this.state.color,
+            key: this.props.navigation.state.params.key
+        }
+        //console.warn("res in color", data.color)
+        updateColor(data)
     }
     handleTrash = () => {
         this.setState({
@@ -30,7 +42,6 @@ export default class EditNote extends Component {
         }
         trashNotes(data)
         this.props.navigation.navigate('drawerScreen')
-
     }
     getArchive() {
         this.setState({
@@ -131,7 +142,7 @@ export default class EditNote extends Component {
     }
     render() {
         return (
-            <View style={{ flex: 1 }}>
+            <View style={{ backgroundColor: this.state.color, flex: 1 }}>
                 <View style={styles.data1}>
                     <View>
                         <TouchableOpacity onPress={() => { this.onSubmit() }}>
@@ -192,9 +203,6 @@ export default class EditNote extends Component {
                             }}>
                             <View style={{ margin: 30 }}>
                                 <TouchableOpacity onPress={this.handleTrash}>
-                                    {/* <View style={{paddingTop:20}}>
-                            <Image style={{ width: 20 }} source={require('../assets/delete.png')} />
-                        </View> */}
                                     <Text> Delete </Text>
                                 </TouchableOpacity>
                             </View>

@@ -36,8 +36,8 @@ export default class TakeNote extends Component {
         }
         this.onChangeColor = this.onChangeColor.bind(this)
     }
-    onChangeColor = (color) => {
-        this.setState({
+    async onChangeColor(color) {
+        await this.setState({
             color: color
         })
         //console.warn("color",color)
@@ -126,8 +126,7 @@ export default class TakeNote extends Component {
                 color: this.state.color,
                 trash: this.state.trash,
             }
-            console.warn("res in data", data);
-
+            console.log("res in data", data);
             if (data.title == '' && data.description == '') {
                 this.props.navigation.navigate('drawerScreen')
                 Snackbar.show({
@@ -160,7 +159,7 @@ export default class TakeNote extends Component {
     }
     render() {
         return (
-            <View style={{ flex: 1, backgroundColor: this.state.color}}>
+            <View style={{ flex: 1, backgroundColor: this.state.color }}>
                 <View style={styles.data1}>
                     <View>
                         <TouchableOpacity onPress={() => { this.onSubmit() }}>
@@ -226,7 +225,6 @@ export default class TakeNote extends Component {
                             </View>
                             <Menu
                                 color={this.onChangeColor}
-                                navigation={this.props.navigation}
                             />
                         </RBSheet>
                         <Image style={styles.image2} source={require('../assets/menu1.png')}></Image>

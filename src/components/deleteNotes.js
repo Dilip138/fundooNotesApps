@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import { View, TouchableOpacity, Image, Text, TextInput } from 'react-native';
 import styles from '../styleSheet';
 import RBSheet from 'react-native-raw-bottom-sheet';
-import { deleteNotes } from '../controller/controller';
+import Snackbar from 'react-native-snackbar';
+import { deleteNotes, restoreNotes } from '../controller/controller';
 
 export default class DeleteNotes extends Component {
     constructor(props) {
@@ -14,13 +15,44 @@ export default class DeleteNotes extends Component {
     }
     handleDelete = () => {
         try {
+            deleteNotes(this.props.navigation.state.params.key)
+                .then((res) => {
+                    console.log("res in deleteNotes", res)
+                    this.props.navigation.navigate('drawerScreen')
+                    Snackbar.show({
+                        title: 'DeleteNotes is SuccessFull',
+                        duration: Snackbar.LENGTH_SHORT,
+                        action: {
+                            title: 'UNDO',
+                            color: 'green',
+                        },
+                    });
+                })
+        }
+        catch (error) {
+            console.log("error in deleteNotes", error);
+        }
+    }
+    handleRestore = () => {
+        try {
             let data = {
-                title: this.state.title,
-                description: this.state.description,
-                key: this.props.navigation.state.params.key
+                trash:this.props.navigation.state.params.display.trash,
+                key:this.props.navigation.state.params.key
             }
-            deleteNotes(data)
-            this.props.navigation.navigate('drawerScreen')
+            //console.warn("res in restoreNotes",data.trash)
+            restoreNotes(data)
+                .then((res) => {
+                    console.log("res in restoreNotes", res)
+                    this.props.navigation.navigate('drawerScreen')
+                    Snackbar.show({
+                        title: 'RestoreNotes is SuccessFull',
+                        duration: Snackbar.LENGTH_SHORT,
+                        action: {
+                            title: 'UNDO',
+                            color: 'green',
+                        },
+                    });
+                })
         }
         catch (error) {
             console.log("error in deleteNotes", error);
@@ -71,7 +103,7 @@ export default class DeleteNotes extends Component {
                                         <Text> Restore </Text>
                                     </TouchableOpacity>
                                 </View>
-                                <View style={{marginTop:16}}>
+                                <View style={{ marginTop: 16 }}>
                                     <TouchableOpacity onPress={this.handleDelete}>
                                         <Text> Delete forever </Text>
                                     </TouchableOpacity>

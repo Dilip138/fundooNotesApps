@@ -34,11 +34,11 @@ class Trash extends Component {
         let arr = []
         arr = this.state.note.map((notes) => {
             let notes1 = notes.data();
-            if (notes1.trash === true ) {
+            if (notes1.trash === true) {
                 return (
                     <View>
                         <TouchableOpacity onLongPress={this.longPressClick} onPress={() => this.props.navigation.navigate('deleteNotes', { display: notes1, key: notes.id })}>
-                            <Card containerStyle={{borderRadius:10}}>
+                            <Card containerStyle={{backgroundColor:notes1.color, borderRadius:10}}>
                                 <View>
                                     <View style={{ padding: 5 }}>
                                         <Text>{notes1.title}</Text>

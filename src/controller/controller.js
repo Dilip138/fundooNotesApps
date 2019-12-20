@@ -144,10 +144,10 @@ export async function archiveNotes(archiveData) {
  * @param {deleteNotes for user authentication} deleteData 
  */
 export async function deleteNotes(deleteData) {
-    try {    
+    try {
         //console.warn("res in deleteNotes",deleteData);        
-        let res = await db.collection('notes').doc(deleteData.key).delete()
-        console.warn("deleteData successfull", res)
+        let res = await db.collection('notes').doc(deleteData).delete()
+        console.log("deleteData successfull", res)
     }
     catch (error) {
         console.log(error.toString());
@@ -162,6 +162,7 @@ export async function trashNotes(trashData) {
         //console.warn("res in trash", trashData);
         if (trashData.trash == false) {
             trashData.trash = true
+            trashData.color != ''
             trashData.archive = false
             trashData.reminder = false
         }
@@ -173,6 +174,30 @@ export async function trashNotes(trashData) {
     catch (error) {
         console.log(error.toString());
     }
+}
+export async function restoreNotes(restoreData) {
+    //console.warn("res in restoreNotes",restoreData)
+    if (restoreData.trash == true) {
+        restoreData.trash = false
+    }
+    else {
+        restoreData.trash = true
+    }
+    await db.collection('notes').doc(restoreData.key).update(restoreData)
+}
+export async function updateColor(colorData) {
+    try {
+        //console.warn("res in colorData", colorData);
+        let data = {
+            color: colorData.color,
+        }
+        console.warn("res in colorData", data);
+        await db.collection('notes').doc(colorData.key).update(data)
+    }
+    catch (error) {
+        console.log(error.toString())
+    }
+
 }
 //check logOut for user authentication
 export async function userSignOut() {

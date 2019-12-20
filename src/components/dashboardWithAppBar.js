@@ -37,18 +37,12 @@ class DashBoardWithAppBar extends Component {
         ),
     };
     menu = null;
- 
-  setMenuRef = ref => {
-    this.menu = ref;
-  };
- 
-//   hideMenu = () => {
-//     this.menu.hide();
-//   };
- 
-  showMenu = () => {
-    this.menu.show();
-  };
+    setMenuRef = ref => {
+        this.menu = ref;
+    };
+    showMenu = () => {
+        this.menu.show();
+    };
     componentDidMount() {
         getNotes().then((res) => {
             this.setState({
@@ -90,33 +84,6 @@ class DashBoardWithAppBar extends Component {
     };
     render() {
         let borderColor = !this.state.click ? (styles.color) : (styles.color1)
-        let arr = []
-        arr = this.state.note.map((notes) => {
-            //console.warn("res in map1", notes)
-            let notes1 = notes.data();
-            let take = this.state.open ? (styles.grid) : (styles.list)
-            if (notes1.pinned === false && notes1.trash !== true && notes1.archive !== true) {
-                return (
-                    <View style={take}>
-                        <TouchableOpacity onLongPress={this.longPressClick} onPress={() => this.props.navigation.navigate('editNote', { display: notes1, key: notes.id })}>
-                            <Card containerStyle={[{backgroundColor:notes1.color},borderColor]}>
-                                <View>
-                                    <View style={{ padding: 5 }}>
-                                        <Text>{notes1.title}</Text>
-                                    </View>
-                                    <View style={{ padding: 5 }}>
-                                        <Text>{notes1.description}</Text>
-                                    </View>
-                                    <View style={{ padding: 5 }}>
-                                        <Text>{notes1.reminder}</Text>
-                                    </View>
-                                </View>
-                            </Card>
-                        </TouchableOpacity>
-                    </View>
-                )
-            }
-        })
         let pinArr = []
         pinArr = this.state.note.map((notes) => {
             //console.log("res in map2", notes)
@@ -126,7 +93,7 @@ class DashBoardWithAppBar extends Component {
                 return (
                     <View style={take}>
                         <TouchableOpacity onLongPress={(event) => this.longPressClick(event)} onPress={() => this.props.navigation.navigate('editNote', { display: notes1, key: notes.id })} >
-                            <Card containerStyle={[{backgroundColor:notes1.color},borderColor]}>
+                            <Card containerStyle={[{ backgroundColor: notes1.color, borderWidth: 2 }, borderColor]}>
                                 <View>
                                     <View style={{ padding: 5 }}>
                                         <Text>{notes1.title}</Text>
@@ -144,6 +111,34 @@ class DashBoardWithAppBar extends Component {
                 )
             }
         })
+        let arr = []
+        arr = this.state.note.map((notes) => {
+            //console.warn("res in map1", notes)
+            let notes1 = notes.data();
+            let take = this.state.open ? (styles.grid) : (styles.list)
+            if (notes1.pinned === false && notes1.trash !== true && notes1.archive !== true) {
+                return (
+                    <View style={take}>
+                        <TouchableOpacity onLongPress={this.longPressClick} onPress={() => this.props.navigation.navigate('editNote', { display: notes1, key: notes.id })}>
+                            <Card containerStyle={[{ backgroundColor: notes1.color }, borderColor]}>
+                                <View>
+                                    <View style={{ padding: 5 }}>
+                                        <Text>{notes1.title}</Text>
+                                    </View>
+                                    <View style={{ padding: 5 }}>
+                                        <Text>{notes1.description}</Text>
+                                    </View>
+                                    <View style={{ padding: 5 }}>
+                                        <Text>{notes1.reminder}</Text>
+                                    </View>
+                                </View>
+                            </Card>
+                        </TouchableOpacity>
+                    </View>
+                )
+            }
+        })
+
         return (
             <View style={styles.header}  >
                 <ScrollView>
@@ -219,13 +214,13 @@ class DashBoardWithAppBar extends Component {
                                 </Menu>
                             </View>
                         </View>)}
-                    <View><Text style={{ marginLeft: 20, fontSize: 11 }}>OTHERS</Text></View>
-                    <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
-                        {arr}
-                    </View>
                     <View><Text style={{ marginLeft: 20, fontSize: 11 }}>PINNED</Text></View>
                     <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
                         {pinArr}
+                    </View>
+                    <View><Text style={{ marginLeft: 20, fontSize: 11 }}>OTHERS</Text></View>
+                    <View style={{ flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-between' }}>
+                        {arr}
                     </View>
                 </ScrollView>
                 <View style={styles.footer}>
@@ -247,7 +242,7 @@ class DashBoardWithAppBar extends Component {
                         <TouchableHighlight style={styles.imageIcon}
                             onPress={() => { this.props.navigation.navigate('takeNotes') }}>
                             <Image source={require('../assets/plus2.jpg')}
-                                style={[styles.image1,{borderRadius:50}]} />
+                                style={[styles.image1, { borderRadius: 50 }]} />
                         </TouchableHighlight>
                     </View>
                 </View>

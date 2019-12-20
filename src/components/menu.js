@@ -1,54 +1,41 @@
 import React, { Component } from 'react';
-import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native';
-import styles from '../styleSheet'
+import { View, FlatList, TouchableOpacity } from 'react-native';
 const colorPattern = [
     {
-        colorCode: "rgb(255, 255, 255)",
-        colorName: "White"
+        colorCode: "rgb(255, 255, 255)"
     },
     {
-        colorCode: "rgb(242, 139, 130)",
-        colorName: "Red"
+        colorCode: "rgb(242, 139, 130)"
     },
     {
-        colorCode: "rgb(215, 174, 251)",
-        colorName: "Purple"
+        colorCode: "rgb(215, 174, 251)"
     },
     {
-        colorCode: "rgb(255, 192, 203)",
-        colorName: "Pink"
+        colorCode: "rgb(255, 192, 203)"
     },
     {
-        colorCode: "rgb(167, 255, 235)",
-        colorName: "Teal"
+        colorCode: "rgb(167, 255, 235)"
     },
     {
-        colorCode: "rgb(251, 188, 4)",
-        colorName: "Orange"
+        colorCode: "rgb(251, 188, 4)"
     },
     {
-        colorCode: "rgb(174, 203, 250)",
-        colorName: "Dark Blue"
+        colorCode: "rgb(174, 203, 250)"
     },
     {
-        colorCode: "rgb(232, 234, 237)",
-        colorName: "Gray"
+        colorCode: "rgb(232, 234, 237)"
     },
     {
-        colorCode: "rgb(203, 240, 248)",
-        colorName: "Blue"
+        colorCode: "rgb(203, 240, 248)"
     },
     {
-        colorCode: "rgb(230, 201, 168)",
-        colorName: "Brown"
+        colorCode: "rgb(230, 201, 168)"
     },
     {
-        colorCode: "rgb(255, 255, 0)",
-        colorName: "Yellow"
+        colorCode: "rgb(255, 255, 0)"
     },
     {
-        colorCode: "rgb(204, 255, 144)",
-        colorName: "Green"
+        colorCode: "rgb(204, 255, 144)"
     }
 ]
 export default class Menu extends Component {
@@ -59,9 +46,9 @@ export default class Menu extends Component {
         }
         this.handleColor = this.handleColor.bind(this)
     }
-    handleColor(color){
-        this.setState({
-            color:color
+    async handleColor(color) {
+        await this.setState({
+            color: color
         })
         this.props.color(this.state.color)
     }
@@ -75,10 +62,10 @@ export default class Menu extends Component {
     }
     render() {
         return (
-            <View >              
-                    <FlatList horizontal={true}
-                        data={colorPattern}
-                        renderItem={this.renderItem} />
+            <View >
+                <FlatList horizontal={true}
+                    data={colorPattern}
+                    renderItem={this.renderItem} />
             </View>
         );
     }
