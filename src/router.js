@@ -20,6 +20,7 @@ import DashboardWithAppBar from './components/dashboardWithAppBar';
 import EditNote from './components/editNote';
 import Menu from './components/menu';
 import DeleteNotes from './components/deleteNotes';
+import SearchNote from './components/searchNote';
 const AppNavigator = createStackNavigator({
     //calling the login component
     login: {
@@ -100,6 +101,12 @@ const AppNavigator = createStackNavigator({
         screen: Menu,
         navigationOptions: {
             header: null
+        }
+    },
+    searchNote:{
+        screen:SearchNote,
+        navigationOptions:{
+            header:null
         }
     },
     //calling the signOut component

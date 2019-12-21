@@ -155,7 +155,7 @@ class DashBoardWithAppBar extends Component {
                                         </TouchableOpacity>
                                     </View>
                                     <View style={{ marginLeft: 25 }}>
-                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('search')}>
+                                        <TouchableOpacity onPress={() => this.props.navigation.navigate('searchNote')}>
                                             <Text style={{ fontSize: 17 }}>Search your notes </Text>
                                         </TouchableOpacity>
                                     </View>

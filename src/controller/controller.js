@@ -11,7 +11,7 @@ import EventEmitter from 'react-native-eventemitter'
 let db = firebaseData.firestore();
 /**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             
  * 
- * @param {create emailId and password for authentication} user 
+ * @param {user}  //create emailId and password for user authentication
  */
 export async function userSignUp(user) {
     try {
@@ -38,7 +38,7 @@ export async function userSignUp(user) {
 };
 /**
  * 
- * @param {check emailId and password for authentication} user 
+ * @param {user}  //check emailId and password for user authentication
  */
 export async function userLogin(user) {
     try {
@@ -51,7 +51,7 @@ export async function userLogin(user) {
 }
 /**
  * 
- * @param {check email for paswwordReset authentication} user 
+ * @param {user}  //check email for paswwordReset authentication
  */
 export async function userForgot(user) {
     try {
@@ -63,7 +63,7 @@ export async function userForgot(user) {
 }
 /**
  * 
- * @param {createNotes title, description and reminder for authentication} noteData 
+ * @param {noteData}  //createNotes title, description and reminder for authentication
  */
 export async function createNotes(noteData) {
     let data = {
@@ -103,7 +103,7 @@ export async function getNotes() {
 }
 /**
  * 
- * @param {editNotes for user authentication} editData 
+ * @param {editData}  //editNotes for user authentication
  */
 export async function editNotes(editData) {
     //console.warn("res in editData", editData);
@@ -122,7 +122,7 @@ export async function editNotes(editData) {
 }
 /**
  * 
- * @param {archiveNotes for user authentication} archiveData 
+ * @param {archiveData} //archiveNotes for user authentication
  */
 export async function archiveNotes(archiveData) {
     try {
@@ -141,7 +141,7 @@ export async function archiveNotes(archiveData) {
 }
 /**
  * 
- * @param {deleteNotes for user authentication} deleteData 
+ * @param {deleteData}  //deleteNotes for user authentication
  */
 export async function deleteNotes(deleteData) {
     try {
@@ -155,16 +155,15 @@ export async function deleteNotes(deleteData) {
 }
 /**
  * 
- * @param {trashNotes for user authentication} trashData 
+ * @param {trashData}  //trashNotes for user authentication
  */
 export async function trashNotes(trashData) {
     try {
         //console.warn("res in trash", trashData);
         if (trashData.trash == false) {
             trashData.trash = true
-            trashData.color != ''
             trashData.archive = false
-            trashData.reminder = false
+            trashData.reminder = ''
         }
         else {
             trashData.trash = false
@@ -175,6 +174,10 @@ export async function trashNotes(trashData) {
         console.log(error.toString());
     }
 }
+/**
+ * 
+ * @param {restoreData } //restoreNotes for user authentication
+ */
 export async function restoreNotes(restoreData) {
     //console.warn("res in restoreNotes",restoreData)
     if (restoreData.trash == true) {
@@ -185,6 +188,10 @@ export async function restoreNotes(restoreData) {
     }
     await db.collection('notes').doc(restoreData.key).update(restoreData)
 }
+/**
+ * 
+ * @param {colorData}  //updateColor for user authentication
+ */
 export async function updateColor(colorData) {
     try {
         //console.warn("res in colorData", colorData);
@@ -197,7 +204,6 @@ export async function updateColor(colorData) {
     catch (error) {
         console.log(error.toString())
     }
-
 }
 //check logOut for user authentication
 export async function userSignOut() {
